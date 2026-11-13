@@ -8,6 +8,15 @@ export interface TextStyle {
   spacing?: number
 }
 
+// A value placed inside a double-quoted attribute, such as a host's image href.
+export function attr(value: string): string {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+}
+
 export function text(str: string | number, style: TextStyle): string {
   const { x, y, size, fill, weight = 400, anchor = 'start', spacing = 0 } = style
   const esc = String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
@@ -56,9 +65,18 @@ export function wrap(str: string, { width, size }: Measure): string[] {
 
 // Bare and Node differ in the last bit of sin and cos; two decimals keep their SVG identical.
 export function fixed(svg: string): string {
-  return svg.replace(/<[^>]+>/g, (tag) =>
-    tag.replace(/="[^"]*"/g, (attr) =>
-      attr.replace(/-?\d+\.\d{3,}/g, (n) => String(Math.round(Number(n) * 100) / 100))
-    )
+  return svg.replace(/<[^<>]+>/g, (tag) => tag.replace(/(?<![\w-])([\w-]+)="([^"]*)"/g, rounded))
+}
+
+// A host's href is passed through untouched; the lookbehinds keep both scans linear.
+function rounded(whole: string, name: string, value: string): string {
+  if (name === 'href') {
+    return whole
+  }
+
+  const short = value.replace(/-?(?<![\d.])\d+\.\d{3,}/g, (n) =>
+    String(Math.round(Number(n) * 100) / 100)
   )
+
+  return `${name}="${short}"`
 }

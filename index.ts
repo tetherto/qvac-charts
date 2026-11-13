@@ -1,12 +1,13 @@
 import { formatter } from './lib/format.ts'
 import { normalize } from './lib/normalize.ts'
+import type { Mark } from './lib/frame.ts'
 import { render } from './lib/render.ts'
 import { chartSchema } from './lib/schema.ts'
 import type { Chart as Normalized, ChartType, Spec } from './lib/spec.ts'
 import type { Maps } from './lib/places.ts'
 import type { ThemeName } from './lib/themes.ts'
 
-export type { ChartType, Spec, ThemeName }
+export type { ChartType, Mark, Spec, ThemeName }
 
 export interface ChartOptions {
   maps?: Maps
@@ -14,6 +15,8 @@ export interface ChartOptions {
 
 export interface SVGOptions {
   theme?: ThemeName
+  // The host's brand mark, drawn at the right of the footer; nothing is drawn without it.
+  mark?: Mark
 }
 
 export class Chart {
@@ -34,8 +37,8 @@ export class Chart {
     this.summary = summarize(normalized)
   }
 
-  toSVG({ theme = 'dark' }: SVGOptions = {}): string {
-    return render(this.normalized, theme)
+  toSVG({ theme = 'dark', mark }: SVGOptions = {}): string {
+    return render(this.normalized, { theme, mark })
   }
 }
 
