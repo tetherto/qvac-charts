@@ -1,6 +1,6 @@
 import { callout, W, type Draw, type Place } from '../frame.ts'
-import type { Rect } from '../geometry.ts'
-import { regionCount, type Maps } from '../places.ts'
+import { ceiling, type Rect } from '../geometry.ts'
+import { regionCount, type GeoRegion, type Maps } from '../places.ts'
 import type { Chart, Row } from '../spec.ts'
 import { halo, text } from '../svg.ts'
 import { contrast, ramp, type Ramp } from '../themes.ts'
@@ -35,7 +35,7 @@ export function bubbleMap(d: Draw): void {
   const y = world(d, () => t.faint)
   const k = b.w / atlas(spec).world.width
   const top = byValue(spec.data)
-  const max = top[0].value
+  const max = ceiling(top.map((r) => r.value))
 
   for (const row of top) {
     const r = atlas(spec).world.regions.find((x) => x.name === row.label)
@@ -148,16 +148,21 @@ function ranking({ out, spec, t, fmt }: Draw, { x, y: top, w }: Place): void {
 function world({ out, spec, t, b }: Draw, fill: (row: Row | undefined) => string): number {
   const k = b.w / atlas(spec).world.width
   const byName = new Map(spec.data.map((row) => [row.label, row]))
-  const shapes = atlas(spec).world.regions.map((r) => {
+  const lit = (r: GeoRegion): boolean => {
+    const row = byName.get(r.name)
+
+    return row !== undefined && row.label === spec.highlight
+  }
+  const regions = atlas(spec).world.regions
+
+  // The highlight is drawn last so its outline is not covered by a neighbour.
+  const shapes = [...regions.filter((r) => !lit(r)), ...regions.filter(lit)].map((r) => {
     const row = byName.get(r.name)
     const on = row && row.label === spec.highlight
 
     return `<path d="${r.d}" fill="${fill(row)}" stroke="${on ? t.text : t.bg}" stroke-width="${(on ? 2.5 : 0.6) / k}"/>`
   })
-  const lit = (s: string): number => (s.includes(`stroke="${t.text}"`) ? 1 : 0)
 
-  // The highlight is drawn last so its outline is not covered by a neighbour.
-  shapes.sort((a, c) => lit(a) - lit(c))
   out.push(`<g transform="translate(${b.x},${b.y}) scale(${k})">${shapes.join('')}</g>`)
 
   return b.y + atlas(spec).world.height * k

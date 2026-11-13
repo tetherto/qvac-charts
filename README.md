@@ -52,7 +52,7 @@ npm run lint
 npm test
 ```
 
-`npm test` runs the suite on Node and on Bare. The snapshot tests hash the SVG of every spec in `test/fixtures/specs/`; after an intended change to the drawing, look at the charts and run `npm run test:snapshots` to record the new hashes. `npm run build:lib` compiles the TypeScript source to `dist-lib/`, which is what the package publishes.
+`npm test` runs the suite on Node and on Bare. The snapshot tests hash the SVG of every spec in `test/fixtures/specs/`; after an intended change to the drawing, look at the charts and run `npm run snapshots:update` to record the new hashes. `npm run build:lib` compiles the TypeScript source to `dist-lib/`, which is what the package publishes.
 
 ## License
 

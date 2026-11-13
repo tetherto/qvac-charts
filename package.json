@@ -25,7 +25,7 @@
     "test:generate": "brittle-make-test test/all.mjs test/*.ts",
     "build:lib": "node scripts/build-lib.mjs",
     "build:world": "node scripts/project-world.mjs lib/maps/world.ts",
-    "test:snapshots": "node scripts/snapshots.mjs"
+    "snapshots:update": "node scripts/snapshots.mjs"
   },
   "devDependencies": {
     "brittle": "^4.5.0",

@@ -254,7 +254,18 @@ function lay(row: ReadonlyArray<number>, { r, cells }: Layout): Rect {
   return { x: r.x, y: r.y + h, w: r.w, h: r.h - h }
 }
 
+// The top of a value scale; a series with nothing above zero still gets a scale to draw on.
+export function ceiling(values: ReadonlyArray<number>): number {
+  const top = Math.max(...values)
+
+  return top > 0 ? top : 1
+}
+
 export function ticks(max: number): number[] {
+  if (!(max > 0)) {
+    return [0]
+  }
+
   const step = Math.pow(10, Math.floor(Math.log10(max / 4)))
   const unit = [1, 2, 2.5, 5].map((m) => m * step).find((s) => max / s <= 5) ?? 10 * step
   const out: number[] = []
