@@ -1,10 +1,11 @@
-import { canonical, mapFor, region, type MapName } from './maps/index.ts'
+import { canonical, mapFor, region, type Maps } from './places.ts'
 import { pick } from './pick.ts'
 import type { Callout, Chart, ChartType, Row, Spec } from './spec.ts'
 
 // The spec as it moves through normalization: rows may gain a region, a change gains its moments.
 export interface Draft extends Omit<Spec, 'data'> {
   data: ReadonlyArray<Row>
+  maps?: Maps | undefined
 }
 
 const prefixes: Partial<Record<string, string>> = {
@@ -36,8 +37,8 @@ const PARTS: ReadonlyArray<ChartType> = [
 const PERIOD = /^(\d{4}|q[1-4]|jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)/i
 
 // Derived numbers are computed here, never by the model: small models get the arithmetic wrong.
-export function normalize(input: Spec): Chart {
-  const spec = arranged(input)
+export function normalize(input: Spec, maps: Maps | undefined): Chart {
+  const spec = arranged(input, maps)
   const notes = new Map((spec.annotations ?? []).map((a) => [a.label, a.text]))
 
   // Back to base units first, so "4800 thousands" is shown as 4.8M, not 4,800K.
@@ -85,17 +86,19 @@ export function normalize(input: Spec): Chart {
     suffix,
     decimals: decimals(spec, { data, scaled }),
     map: spec.map ?? 'world',
+    maps,
     from: spec.from,
     to: spec.to,
     annotations: spec.annotations ?? []
   }
 }
 
-function arranged(input: Spec): Draft {
+function arranged(input: Spec, maps: Maps | undefined): Draft {
   let spec: Draft = unswap(input)
 
+  // Without the map data a place chart is still a ranking of its places.
   if (spec.shape === 'places') {
-    spec = places(spec)
+    spec = maps ? places(spec, maps) : { ...spec, shape: 'ranking' }
   }
 
   if (spec.shape === 'change' && !spec.data.some((d) => d.previous !== undefined)) {
@@ -155,27 +158,31 @@ function unswap(spec: Spec): Draft {
 }
 
 // Labels arrive as any name the model wrote ("USA", "Vietnã", "SP"); one region per canonical name.
-function places(spec: Draft): Draft {
-  const map = mapFor(spec.data.map((d) => d.label))
+function places(spec: Draft, maps: Maps): Draft {
+  const map = mapFor(
+    maps,
+    spec.data.map((d) => d.label)
+  )
   const seen = new Set<string>()
   const data: Row[] = []
 
   for (const d of spec.data) {
-    const label = canonical(map, d.label) ?? d.label
+    const label = canonical(maps, { map, label: d.label }) ?? d.label
 
     if (seen.has(label)) {
       continue
     }
 
     seen.add(label)
-    data.push({ ...d, label, region: region(map, d.label) })
+    data.push({ ...d, label, region: region(maps, { map, label: d.label }) })
   }
 
   return {
     ...spec,
     map,
+    maps,
     data,
-    highlight: canonical(map, spec.highlight) ?? spec.highlight,
+    highlight: canonical(maps, { map, label: spec.highlight }) ?? spec.highlight,
     annotations: []
   }
 }

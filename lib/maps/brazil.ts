@@ -1,9 +1,4 @@
-export interface Tile {
-  code: string
-  name: string
-  col: number
-  row: number
-}
+import type { Tile } from '../places.ts'
 
 // A tile grid: each state is one square at a fixed spot that keeps the country's outline.
 export const brazil: ReadonlyArray<Tile> = [

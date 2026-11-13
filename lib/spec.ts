@@ -1,4 +1,4 @@
-import type { MapName } from './maps/index.ts'
+import type { Maps } from './places.ts'
 
 export type ChartType =
   | 'ranked-bar'
@@ -51,7 +51,7 @@ export interface Spec {
   annotations?: ReadonlyArray<Annotation>
   callout?: string | Callout
   source: string
-  map?: MapName
+  map?: string
   from?: string | undefined
   to?: string | undefined
 }
@@ -73,7 +73,8 @@ export interface Chart {
   prefix: string | undefined
   suffix: string | undefined
   decimals: number
-  map: MapName
+  map: string
+  maps: Maps | undefined
   from: string | undefined
   to: string | undefined
   annotations: ReadonlyArray<Annotation>

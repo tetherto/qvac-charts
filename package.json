@@ -5,7 +5,8 @@
   "type": "module",
   "exports": {
     "./package": "./package.json",
-    ".": "./index.ts"
+    ".": "./index.ts",
+    "./maps": "./maps.ts"
   },
   "files": [
     "package.json",
