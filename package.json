@@ -23,7 +23,7 @@
     "test:bare": "brittle-bare test/all.mjs",
     "test:generate": "brittle-make-test test/all.mjs test/*.ts",
     "build:lib": "node scripts/build-lib.mjs",
-    "build:world": "node scripts/project-world.mjs lib/maps/world.js",
+    "build:world": "node scripts/project-world.mjs lib/maps/world.ts",
     "test:snapshots": "node scripts/snapshots.mjs"
   },
   "devDependencies": {

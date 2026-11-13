@@ -9,6 +9,6 @@
     "types": [],
     "removeComments": true
   },
-  "include": ["index.ts", "lib/**/*.ts", "lib/**/*.js"],
+  "include": ["index.ts", "lib/**/*.ts"],
   "exclude": ["node_modules", "dist-lib", "test", "scripts"]
 }

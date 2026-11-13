@@ -25,10 +25,11 @@ const chart = Chart.from({
 })
 
 chart.type // 'ranked-bar'
+chart.summary // 'Ranked bar, 3 items, highlight USDT, $187B'
 chart.toSVG({ theme: 'light' }) // a 1080×1350 SVG string
 ```
 
-The model describes the data; the package picks the chart, does the arithmetic and draws it. There are 14 chart types, including a world choropleth, a bubble map and a grid of Brazilian states.
+`summary` is one line a model can talk about the chart from, without seeing it. The model describes the data; the package picks the chart, does the arithmetic and draws it. There are 14 chart types, including a world choropleth, a bubble map and a grid of Brazilian states.
 
 ## Development
 

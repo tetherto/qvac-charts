@@ -1,33 +1,44 @@
-import { normalize, render } from './lib/render.js'
-import { chartSchema } from './lib/schema.js'
+import { formatter } from './lib/format.ts'
+import { normalize } from './lib/normalize.ts'
+import { render } from './lib/render.ts'
+import { chartSchema } from './lib/schema.ts'
+import type { Chart as Normalized, ChartType, Spec } from './lib/spec.ts'
+import type { ThemeName } from './lib/themes.ts'
 
-export type Theme = 'dark' | 'light'
+export type { ChartType, Spec, ThemeName }
 
 export interface SVGOptions {
-  theme?: Theme
-}
-
-interface Normalized {
-  type: string
+  theme?: ThemeName
 }
 
 export class Chart {
   static schema = chartSchema
 
-  // The renderer normalizes on its own; the normalized copy here only answers questions about the chart.
-  static from(spec: object): Chart {
-    return new Chart(spec, normalize(spec))
+  static from(spec: Spec): Chart {
+    return new Chart(normalize(spec))
   }
 
-  readonly type: string
-  private spec: object
+  readonly type: ChartType
+  readonly summary: string
+  private normalized: Normalized
 
-  private constructor(spec: object, normalized: Normalized) {
-    this.spec = spec
+  private constructor(normalized: Normalized) {
+    this.normalized = normalized
     this.type = normalized.type
+    this.summary = summarize(normalized)
   }
 
   toSVG({ theme = 'dark' }: SVGOptions = {}): string {
-    return render(this.spec, { theme })
+    return render(this.normalized, theme)
   }
+}
+
+// One line a model can talk about the chart from, without seeing it.
+function summarize(chart: Normalized): string {
+  const name = chart.type.replace('-', ' ')
+  const kind = name[0].toUpperCase() + name.slice(1)
+  const lead = chart.data.find((d) => d.label === chart.highlight)
+  const focus = lead ? `, highlight ${lead.label}, ${formatter(chart)(lead.value)}` : ''
+
+  return `${kind}, ${chart.data.length} items${focus}`
 }

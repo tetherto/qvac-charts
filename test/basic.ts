@@ -24,5 +24,6 @@ test('a chart is picked from the shape of its data', (t) => {
     source: 'User data'
   })
   t.is(chart.type, 'donut')
+  t.is(chart.summary, 'Donut, 4 items, highlight Features, 45%')
   t.ok(chart.toSVG().startsWith('<svg '))
 })

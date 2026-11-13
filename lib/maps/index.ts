@@ -1,15 +1,15 @@
-import { world } from './world.js'
-import { brazil } from './brazil.js'
+import { world } from './world.ts'
+import { brazil, type Tile } from './brazil.ts'
 
 // Matching ignores case and accents, so "sao paulo", "São Paulo" and "SAO PAULO" are one name.
-const key = (s) =>
+const key = (s: string): string =>
   s
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
     .toLowerCase()
     .trim()
 
-const worldAliases = {
+const worldAliases: Readonly<Record<string, ReadonlyArray<string>>> = {
   'United States': [
     'USA',
     'US',
@@ -87,30 +87,57 @@ const worldAliases = {
   'Dominican Republic': ['República Dominicana']
 }
 
-function names(regions, aliases, id) {
-  const out = new Map()
-  for (const r of regions) {
-    for (const n of [r.name, ...aliases(r)]) {
-      out.set(key(n), r[id])
-    }
+export type MapName = 'world' | 'brazil'
+
+export interface GeoRegion {
+  name: string
+  d: string
+  cx: number
+  cy: number
+}
+
+// Every spelling a model may write, each pointing at the one id the map draws.
+function names(entries: ReadonlyArray<readonly [string, string]>): Map<string, string> {
+  return new Map(entries.map(([name, id]) => [key(name), id]))
+}
+
+const worldNames = names(
+  world.regions.flatMap((r) =>
+    [r.name, ...(worldAliases[r.name] ?? [])].map((n) => [n, r.name] as const)
+  )
+)
+
+const brazilNames = names(
+  brazil.flatMap((t) => [[t.name, t.code] as const, [t.code, t.code] as const])
+)
+
+export const WORLD = world
+export const TILES: Readonly<Record<MapName, ReadonlyArray<Tile>>> = { world: [], brazil }
+
+export const isTiles = (map: MapName): boolean => TILES[map].length > 0
+
+export function region(map: MapName, label: string | undefined): string | undefined {
+  return (map === 'world' ? worldNames : brazilNames).get(key(label ?? ''))
+}
+
+// The name a region is listed under: the country itself, or the state's full name for a code.
+export function canonical(map: MapName, label: string | undefined): string | undefined {
+  const id = region(map, label)
+
+  if (!isTiles(map)) {
+    return id
   }
 
-  return out
+  return TILES[map].find((t) => t.code === id)?.name
 }
 
-export const MAPS = {
-  world: {
-    kind: 'geo',
-    ...world,
-    names: names(world.regions, (r) => worldAliases[r.name] ?? [], 'name')
-  },
-  brazil: { kind: 'tiles', regions: brazil, names: names(brazil, (r) => [r.code], 'code') }
+export function regionCount(map: MapName): number {
+  return isTiles(map) ? TILES[map].length : world.regions.length
 }
-
-export const region = (map, label) => MAPS[map].names.get(key(label ?? ''))
 
 // The map is the one that knows most of the labels; a tie goes to the world.
-export const mapFor = (labels) => {
-  const hits = (m) => labels.filter((l) => region(m, l)).length
+export function mapFor(labels: ReadonlyArray<string>): MapName {
+  const hits = (m: MapName): number => labels.filter((l) => region(m, l)).length
+
   return hits('brazil') > hits('world') ? 'brazil' : 'world'
 }
