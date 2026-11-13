@@ -54,6 +54,12 @@ export function normalize(input: Spec, maps: Maps | undefined): Chart {
   }
 
   const spec = arranged(finite(input), maps)
+
+  // A change pairs each item's two moments; with fewer than two moments nothing is left to draw.
+  if (spec.data.length === 0) {
+    throw new RangeError('A change needs each item twice, once per moment, named in group')
+  }
+
   const notes = new Map((spec.annotations ?? []).map((a) => [a.label, a.text]))
 
   // Back to base units first, so "4800 thousands" is shown as 4.8M, not 4,800K.

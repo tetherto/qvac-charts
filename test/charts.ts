@@ -104,3 +104,22 @@ test('a mark href keeps its digits and a long one renders quickly', (t) => {
       .includes('href="logo-1.23456.png"')
   )
 })
+
+test('a change without two moments is refused, not drawn empty', (t) => {
+  const spec: Spec = {
+    ...base,
+    shape: 'change',
+    data: [
+      { label: 'A', value: 1 },
+      { label: 'B', value: 2 }
+    ],
+    callout: 'none'
+  }
+  const oneMoment: Spec = {
+    ...spec,
+    data: spec.data.map((d) => ({ ...d, group: '2025' }))
+  }
+
+  t.exception.all(() => Chart.from(spec), /twice, once per moment/)
+  t.exception.all(() => Chart.from(oneMoment), /twice, once per moment/)
+})

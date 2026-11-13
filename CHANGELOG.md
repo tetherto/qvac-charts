@@ -8,6 +8,10 @@ While the major version is `0`, a breaking change bumps the minor version.
 
 ## [Unreleased]
 
+### Fixed
+
+- A `change` spec whose items are not each given at two moments throws a `RangeError` from `Chart.from`, instead of a `TypeError` from `toSVG` on an empty chart.
+
 ## [0.1.1] - 2026-11-13
 
 ### Changed
