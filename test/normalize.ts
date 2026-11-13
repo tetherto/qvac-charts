@@ -82,3 +82,34 @@ test('a named map type lands on the map its names belong to', (t) => {
   t.is(Chart.from(spec, { maps }).type, 'choropleth')
   t.is(Chart.from(spec).type, 'ranked-bar', 'and without maps it is a ranking')
 })
+
+test('a value JSON reads as Infinity is dropped, not drawn', (t) => {
+  const spec: Spec = JSON.parse(
+    '{"shape":"over-time","title":"T","subtitle":"S","scale":"ones","unit":"number","source":"x","callout":"none",' +
+      '"data":[{"label":"2021","value":1e400},{"label":"2022","value":2},{"label":"2023","value":3}]}'
+  )
+  const chart = Chart.from(spec)
+
+  t.is(chart.summary, 'Column, 2 items')
+  t.absent(chart.toSVG().includes('Infinity'))
+})
+
+test('a spec with no finite value is refused', (t) => {
+  const spec: Spec = {
+    ...base,
+    shape: 'ranking',
+    data: [{ label: 'a', value: Number.NaN }],
+    callout: 'none'
+  }
+
+  t.exception.all(() => Chart.from(spec), /finite/)
+})
+
+test('more items than the schema allows are refused', (t) => {
+  const data = Array.from({ length: 31 }, (_, i) => ({ label: `item ${i}`, value: i + 1 }))
+
+  t.exception.all(
+    () => Chart.from({ ...base, shape: 'sizes', data, callout: 'none' }),
+    /at most 30/
+  )
+})
