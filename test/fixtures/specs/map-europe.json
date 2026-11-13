@@ -1,0 +1,68 @@
+{
+  "shape": "places",
+  "title": "Nordics Lead on Renewables",
+  "subtitle": "Renewable share of electricity, percent, 2024",
+  "data": [
+    {
+      "label": "Norway",
+      "value": 98
+    },
+    {
+      "label": "Iceland",
+      "value": 99
+    },
+    {
+      "label": "Sweden",
+      "value": 69
+    },
+    {
+      "label": "Denmark",
+      "value": 81
+    },
+    {
+      "label": "Portugal",
+      "value": 61
+    },
+    {
+      "label": "Spain",
+      "value": 50
+    },
+    {
+      "label": "Germany",
+      "value": 52
+    },
+    {
+      "label": "France",
+      "value": 27
+    },
+    {
+      "label": "Italy",
+      "value": 41
+    },
+    {
+      "label": "Poland",
+      "value": 26
+    },
+    {
+      "label": "Netherlands",
+      "value": 47
+    },
+    {
+      "label": "Malta",
+      "value": 12
+    },
+    {
+      "label": "Luxembourg",
+      "value": 18
+    },
+    {
+      "label": "Greece",
+      "value": 50
+    }
+  ],
+  "highlight": "Norway",
+  "scale": "ones",
+  "unit": "percent",
+  "callout": "none",
+  "source": "Fictional sample data"
+}

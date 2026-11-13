@@ -71,7 +71,7 @@ test('moments that name no time keep the order they were written in', (t) => {
 test('a named map type lands on the map its names belong to', (t) => {
   const spec: Spec = {
     ...base,
-    type: 'tiles',
+    type: 'bubble-map',
     data: [
       { label: 'Germany', value: 5 },
       { label: 'France', value: 6 }
@@ -79,7 +79,7 @@ test('a named map type lands on the map its names belong to', (t) => {
     callout: 'none'
   }
 
-  t.is(Chart.from(spec, { maps }).type, 'choropleth')
+  t.is(Chart.from(spec, { maps }).type, 'bubble-map')
   t.is(Chart.from(spec).type, 'ranked-bar', 'and without maps it is a ranking')
 })
 

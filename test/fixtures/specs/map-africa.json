@@ -1,0 +1,41 @@
+{
+  "shape": "places",
+  "variant": "bubbles",
+  "title": "Nigeria Is Africa's Most Populous",
+  "subtitle": "Population in millions, 2024",
+  "data": [
+    {
+      "label": "Nigeria",
+      "value": 229
+    },
+    {
+      "label": "Ethiopia",
+      "value": 129
+    },
+    {
+      "label": "Egypt",
+      "value": 114
+    },
+    {
+      "label": "DR Congo",
+      "value": 110
+    },
+    {
+      "label": "Tanzania",
+      "value": 68
+    },
+    {
+      "label": "South Africa",
+      "value": 63
+    },
+    {
+      "label": "Kenya",
+      "value": 56
+    }
+  ],
+  "highlight": "Nigeria",
+  "scale": "millions",
+  "unit": "number",
+  "callout": "none",
+  "source": "Approximate, from model knowledge"
+}

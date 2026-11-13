@@ -1,18 +1,34 @@
 import { callout, W, type Draw, type Place } from '../frame.ts'
 import { ceiling, type Rect } from '../geometry.ts'
-import { regionCount, type GeoRegion, type Maps } from '../places.ts'
+import { geoMap, type GeoMap, type GeoRegion } from '../places.ts'
 import type { Chart, Row } from '../spec.ts'
 import { halo, text } from '../svg.ts'
 import { contrast, ramp, type Ramp } from '../themes.ts'
 
 const byValue = (data: ReadonlyArray<Row>): Row[] => [...data].sort((a, c) => c.value - a.value)
 // Map charts are only picked when the host passed map data, so a missing one is a bug upstream.
-function atlas(spec: Chart): Maps {
+function atlas(spec: Chart): GeoMap {
   if (!spec.maps) {
     throw new Error(`${spec.type} needs the map data from qvac-charts/maps`)
   }
 
-  return spec.maps
+  return geoMap(spec.maps, spec.map)
+}
+
+interface Fit {
+  k: number
+  x: number
+  y: number
+}
+
+// The map scaled into the chart's width and at most this share of its height, centred.
+const MAP_SHARE = 0.62
+
+function fitted({ spec, b }: Draw): Fit {
+  const map = atlas(spec)
+  const k = Math.min(b.w / map.width, (b.h * MAP_SHARE) / map.height)
+
+  return { k, x: b.x + (b.w - map.width * k) / 2, y: b.y }
 }
 
 export function choropleth(d: Draw): void {
@@ -33,12 +49,12 @@ export function choropleth(d: Draw): void {
 export function bubbleMap(d: Draw): void {
   const { out, spec, t, b } = d
   const y = world(d, () => t.faint)
-  const k = b.w / atlas(spec).world.width
+  const { k, x: ox, y: oy } = fitted(d)
   const top = byValue(spec.data)
   const max = ceiling(top.map((r) => r.value))
 
   for (const row of top) {
-    const r = atlas(spec).world.regions.find((x) => x.name === row.label)
+    const r = atlas(spec).regions.find((x) => x.name === row.label)
 
     if (!r) {
       continue
@@ -48,7 +64,7 @@ export function bubbleMap(d: Draw): void {
     const on = row.label === spec.highlight
 
     out.push(
-      `<circle cx="${b.x + r.cx * k}" cy="${b.y + r.cy * k}" r="${radius}" fill="${on ? t.accent : t.palette[2]}" fill-opacity="0.82" stroke="${t.bg}" stroke-width="2"/>`
+      `<circle cx="${ox + r.cx * k}" cy="${oy + r.cy * k}" r="${radius}" fill="${on ? t.accent : t.palette[2]}" fill-opacity="0.82" stroke="${t.bg}" stroke-width="2"/>`
     )
   }
 
@@ -60,100 +76,17 @@ export function bubbleMap(d: Draw): void {
   })
 }
 
-export function tiles(d: Draw): void {
-  const { out, spec, t, b, fmt } = d
-  const shading = ramp(spec.data, t)
-  const regions = atlas(spec).tiles[spec.map]
-  const cols = Math.max(...regions.map((r) => r.col)) + 1
-  const rows = Math.max(...regions.map((r) => r.row)) + 1
-  const side = Math.min(b.h / rows, (b.w * 0.62) / cols)
-  const gap = side * 0.06
-  const byCode = new Map(spec.data.map((x) => [x.region, x]))
-
-  for (const r of regions) {
-    const row = byCode.get(r.code)
-    const x = b.x + r.col * side
-    const y = b.y + r.row * side
-    const fill = row ? shading.shade(row.value) : t.faint
-    const on = row && row.label === spec.highlight
-    const ink = row ? contrast(fill, t) : t.muted
-
-    out.push(
-      `<rect x="${x + gap / 2}" y="${y + gap / 2}" width="${side - gap}" height="${side - gap}" rx="${side * 0.1}" fill="${fill}"${on ? ` stroke="${t.text}" stroke-width="5"` : ''}/>`
-    )
-    out.push(
-      text(r.code, {
-        x: x + side / 2,
-        y: y + side * (row ? 0.45 : 0.58),
-        size: side * 0.3,
-        weight: 800,
-        fill: ink,
-        anchor: 'middle'
-      })
-    )
-    if (row) {
-      out.push(
-        text(fmt(row.value, Math.min(spec.decimals, 1)), {
-          x: x + side / 2,
-          y: y + side * 0.76,
-          size: side * 0.19,
-          weight: 600,
-          fill: ink,
-          anchor: 'middle'
-        })
-      )
-    }
-  }
-
-  const rx = b.x + cols * side + 48
-  const rw = b.x + b.w - rx
-
-  legend(d, { x: rx, y: b.y + 10, ramp: shading, w: rw })
-  ranking(d, { x: rx, y: b.y, w: rw })
-  callout(d, { x: rx, y: b.y + b.h - 150, w: rw })
-}
-
-// The top states beside the grid, by code and full name.
-function ranking({ out, spec, t, fmt }: Draw, { x, y: top, w }: Place): void {
-  const rows = byValue(spec.data).slice(0, spec.callout ? 5 : 8)
-
-  rows.forEach((row, i) => {
-    const y = top + 150 + i * 62
-    const on = row.label === spec.highlight
-
-    out.push(
-      text(`${i + 1}. ${row.region ?? row.label}`, {
-        x,
-        y,
-        size: 26,
-        weight: 800,
-        fill: on ? t.accent : t.text
-      })
-    )
-    out.push(
-      text(fmt(row.value), {
-        x: x + w,
-        y,
-        size: 26,
-        weight: 700,
-        fill: on ? t.accent : t.text,
-        anchor: 'end'
-      })
-    )
-    out.push(text(row.label, { x, y: y + 26, size: 18, fill: t.muted }))
-  })
-}
-
-// Draws every country and returns where the map ends.
-function world({ out, spec, t, b }: Draw, fill: (row: Row | undefined) => string): number {
-  const k = b.w / atlas(spec).world.width
+// Draws every region of the map and returns where the map ends.
+function world(d: Draw, fill: (row: Row | undefined) => string): number {
+  const { out, spec, t } = d
+  const { k, x, y } = fitted(d)
   const byName = new Map(spec.data.map((row) => [row.label, row]))
   const lit = (r: GeoRegion): boolean => {
     const row = byName.get(r.name)
 
     return row !== undefined && row.label === spec.highlight
   }
-  const regions = atlas(spec).world.regions
+  const regions = atlas(spec).regions
 
   // The highlight is drawn last so its outline is not covered by a neighbour.
   const shapes = [...regions.filter((r) => !lit(r)), ...regions.filter(lit)].map((r) => {
@@ -163,25 +96,26 @@ function world({ out, spec, t, b }: Draw, fill: (row: Row | undefined) => string
     return `<path d="${r.d}" fill="${fill(row)}" stroke="${on ? t.text : t.bg}" stroke-width="${(on ? 2.5 : 0.6) / k}"/>`
   })
 
-  out.push(`<g transform="translate(${b.x},${b.y}) scale(${k})">${shapes.join('')}</g>`)
+  out.push(`<g transform="translate(${x},${y}) scale(${k})">${shapes.join('')}</g>`)
 
-  return b.y + atlas(spec).world.height * k
+  return y + atlas(spec).height * k
 }
 
 // Values on the map for the largest few, skipping any that would land on a label already placed.
-function mapLabels({ out, spec, t, b, fmt }: Draw, items: ReadonlyArray<Row>): void {
-  const k = b.w / atlas(spec).world.width
+function mapLabels(d: Draw, items: ReadonlyArray<Row>): void {
+  const { out, spec, t, fmt } = d
+  const { k, x: ox, y: oy } = fitted(d)
   const placed: Array<{ x: number; y: number }> = []
 
   for (const row of new Set(items)) {
-    const r = atlas(spec).world.regions.find((x) => x.name === row.label)
+    const r = atlas(spec).regions.find((x) => x.name === row.label)
 
     if (!r) {
       continue
     }
 
-    const x = b.x + r.cx * k
-    const y = b.y + r.cy * k
+    const x = ox + r.cx * k
+    const y = oy + r.cy * k
 
     if (placed.some((p) => Math.abs(p.x - x) < 90 && Math.abs(p.y - y) < 30)) {
       continue
@@ -227,7 +161,7 @@ function legend(
     text(fmt(hi), { x: x + w, y: y + 50, size: 22, weight: 700, fill: t.muted, anchor: 'end' })
   )
 
-  if (spec.data.length >= regionCount(atlas(spec), spec.map)) {
+  if (spec.data.length >= atlas(spec).regions.length) {
     return
   }
 

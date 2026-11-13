@@ -1,4 +1,3 @@
-import { isTiles, type Maps } from './places.ts'
 import type { Draft } from './normalize.ts'
 import type { ChartType, Row } from './spec.ts'
 
@@ -10,7 +9,7 @@ export function pick(spec: Draft, data: ReadonlyArray<Row>): ChartType {
   const n = data.length
 
   if (spec.shape === 'places' && spec.maps) {
-    return placesChart(spec, spec.maps)
+    return placesChart(spec)
   }
 
   if (spec.shape === 'ranking') {
@@ -39,9 +38,7 @@ function hasSeries(data: ReadonlyArray<Row>): boolean {
   )
 }
 
-function placesChart(spec: Draft, maps: Maps): ChartType {
-  if (isTiles(maps, spec.map ?? 'world')) return 'tiles'
-
+function placesChart(spec: Draft): ChartType {
   return spec.variant === 'bubbles' ? 'bubble-map' : 'choropleth'
 }
 

@@ -2,24 +2,9 @@
 import { readFileSync, writeFileSync } from 'node:fs'
 import { feature } from 'topojson-client'
 import { geoNaturalEarth1, geoPath, geoCentroid, geoArea } from 'd3-geo'
+import { drop, rename } from './world-names.mjs'
 
 const topo = JSON.parse(readFileSync('node_modules/world-atlas/countries-110m.json', 'utf8'))
-const rename = {
-  'United States of America': 'United States',
-  'Dem. Rep. Congo': 'DR Congo',
-  'Dominican Rep.': 'Dominican Republic',
-  'Central African Rep.': 'Central African Republic',
-  'Eq. Guinea': 'Equatorial Guinea',
-  'Bosnia and Herz.': 'Bosnia and Herzegovina',
-  'Solomon Is.': 'Solomon Islands',
-  'Falkland Is.': 'Falkland Islands',
-  'W. Sahara': 'Western Sahara',
-  'S. Sudan': 'South Sudan',
-  eSwatini: 'Eswatini',
-  Macedonia: 'North Macedonia',
-  'N. Cyprus': 'Northern Cyprus'
-}
-const drop = new Set(['Antarctica', 'Fr. S. Antarctic Lands'])
 const fc = feature(topo, topo.objects.countries)
 fc.features = fc.features.filter((f) => !drop.has(f.properties.name))
 const width = 936
