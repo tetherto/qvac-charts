@@ -8,6 +8,18 @@ While the major version is `0`, a breaking change bumps the minor version.
 
 ## [Unreleased]
 
+### Added
+
+- `mapsFor(labels)` in `qvac-charts/maps` returns the world and, loaded on demand, the continent that holds the places. A places chart whose countries are all on one continent draws that continent: Africa, Asia, Europe, North America, Oceania or South America. Small countries the world map leaves out, such as Malta or Singapore, are drawn there, and their names match in six languages and by ISO code.
+
+### Changed
+
+- Breaking: `Maps` is `{ world, continents }`, and a host passes `await mapsFor(labels)` where it passed `maps`. `maps` is still exported, with the world alone.
+
+### Removed
+
+- Breaking: the grid of Brazilian states and the `tiles` chart type. A places spec naming states, of Brazil or any country, is drawn as a ranking.
+
 ## [0.1.2] - 2026-11-13
 
 ### Fixed

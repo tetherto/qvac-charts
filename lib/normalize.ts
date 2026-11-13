@@ -1,4 +1,4 @@
-import { canonical, mapFor, region, type Maps } from './places.ts'
+import { lookup, mapFor, WORLD, type Maps } from './places.ts'
 import { pick } from './pick.ts'
 import { MAX_ITEMS } from './schema.ts'
 import type { Callout, Chart, ChartType, Row, Spec } from './spec.ts'
@@ -39,11 +39,10 @@ const PARTS: ReadonlyArray<ChartType> = [
   'bubbles',
   'stacked',
   'choropleth',
-  'bubble-map',
-  'tiles'
+  'bubble-map'
 ]
 
-const MAP_TYPES: ReadonlyArray<ChartType> = ['choropleth', 'bubble-map', 'tiles']
+const MAP_TYPES: ReadonlyArray<ChartType> = ['choropleth', 'bubble-map']
 
 const PERIOD = /^(\d{4}|q[1-4]|jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)/i
 
@@ -103,7 +102,7 @@ export function normalize(input: Spec, maps: Maps | undefined): Chart {
     prefix,
     suffix,
     decimals: decimals(spec, { data, scaled }),
-    map: spec.map ?? 'world',
+    map: spec.map ?? WORLD,
     maps,
     from: spec.from,
     to: spec.to,
@@ -217,14 +216,20 @@ function places(spec: Draft, maps: Maps): Draft {
   const data: Row[] = []
 
   for (const d of spec.data) {
-    const label = canonical(maps, { map, label: d.label }) ?? d.label
+    const found = lookup(maps, { map, label: d.label })
+    const label = found?.name ?? d.label
 
     if (seen.has(label)) {
       continue
     }
 
     seen.add(label)
-    data.push({ ...d, label, region: region(maps, { map, label: d.label }) })
+    data.push({ ...d, label, region: found?.name })
+  }
+
+  // Places no map knows, such as a country's states, are still a ranking of those places.
+  if (!data.some((d) => d.region)) {
+    return { ...spec, shape: 'ranking' }
   }
 
   return {
@@ -232,7 +237,7 @@ function places(spec: Draft, maps: Maps): Draft {
     map,
     maps,
     data,
-    highlight: canonical(maps, { map, label: spec.highlight }) ?? spec.highlight,
+    highlight: lookup(maps, { map, label: spec.highlight })?.name ?? spec.highlight,
     annotations: []
   }
 }

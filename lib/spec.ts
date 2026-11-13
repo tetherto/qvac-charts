@@ -14,7 +14,6 @@ export type ChartType =
   | 'radial'
   | 'choropleth'
   | 'bubble-map'
-  | 'tiles'
 
 export interface Item {
   label: string

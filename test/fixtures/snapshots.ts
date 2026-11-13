@@ -549,8 +549,8 @@ export const cases: ReadonlyArray<Case> = [
       "callout": "ratio",
       "source": "User data"
     },
-    "dark": "482505be",
-    "light": "1de7a2f5"
+    "dark": "241a5caa",
+    "light": "80609741"
   },
   {
     "name": "4b-mau",
@@ -1280,130 +1280,50 @@ export const cases: ReadonlyArray<Case> = [
     "light": "7544e107"
   },
   {
-    "name": "map-brazil",
+    "name": "map-africa",
     "spec": {
       "shape": "places",
-      "map": "brazil",
-      "title": "Pix Use Is Highest in the Center-West",
-      "subtitle": "Pix transactions per person, 2025",
+      "variant": "bubbles",
+      "title": "Nigeria Is Africa's Most Populous",
+      "subtitle": "Population in millions, 2024",
       "data": [
         {
-          "label": "DF",
-          "value": 412
+          "label": "Nigeria",
+          "value": 229
         },
         {
-          "label": "Goiás",
-          "value": 301
+          "label": "Ethiopia",
+          "value": 129
         },
         {
-          "label": "Mato Grosso",
-          "value": 322
+          "label": "Egypt",
+          "value": 114
         },
         {
-          "label": "Mato Grosso do Sul",
-          "value": 288
+          "label": "DR Congo",
+          "value": 110
         },
         {
-          "label": "Sao Paulo",
-          "value": 296
+          "label": "Tanzania",
+          "value": 68
         },
         {
-          "label": "Rio de Janeiro",
-          "value": 254
+          "label": "South Africa",
+          "value": 63
         },
         {
-          "label": "Minas Gerais",
-          "value": 241
-        },
-        {
-          "label": "Espírito Santo",
-          "value": 247
-        },
-        {
-          "label": "Paraná",
-          "value": 280
-        },
-        {
-          "label": "Santa Catarina",
-          "value": 305
-        },
-        {
-          "label": "Rio Grande do Sul",
-          "value": 236
-        },
-        {
-          "label": "Bahia",
-          "value": 168
-        },
-        {
-          "label": "Pernambuco",
-          "value": 182
-        },
-        {
-          "label": "Ceará",
-          "value": 171
-        },
-        {
-          "label": "Maranhão",
-          "value": 121
-        },
-        {
-          "label": "Piauí",
-          "value": 139
-        },
-        {
-          "label": "Paraíba",
-          "value": 158
-        },
-        {
-          "label": "Rio Grande do Norte",
-          "value": 166
-        },
-        {
-          "label": "Alagoas",
-          "value": 133
-        },
-        {
-          "label": "Sergipe",
-          "value": 149
-        },
-        {
-          "label": "Pará",
-          "value": 131
-        },
-        {
-          "label": "Amazonas",
-          "value": 142
-        },
-        {
-          "label": "Tocantins",
-          "value": 190
-        },
-        {
-          "label": "Rondônia",
-          "value": 215
-        },
-        {
-          "label": "Acre",
-          "value": 152
-        },
-        {
-          "label": "Roraima",
-          "value": 178
-        },
-        {
-          "label": "Amapá",
-          "value": 127
+          "label": "Kenya",
+          "value": 56
         }
       ],
-      "highlight": "Distrito Federal",
-      "scale": "ones",
+      "highlight": "Nigeria",
+      "scale": "millions",
       "unit": "number",
       "callout": "none",
-      "source": "Fictional sample data"
+      "source": "Approximate, from model knowledge"
     },
-    "dark": "b2d5d0d2",
-    "light": "58f20e2a"
+    "dark": "9e087086",
+    "light": "0e28825f"
   },
   {
     "name": "map-bubbles",
@@ -1463,6 +1383,79 @@ export const cases: ReadonlyArray<Case> = [
     },
     "dark": "84b52c9b",
     "light": "73ff39cd"
+  },
+  {
+    "name": "map-europe",
+    "spec": {
+      "shape": "places",
+      "title": "Nordics Lead on Renewables",
+      "subtitle": "Renewable share of electricity, percent, 2024",
+      "data": [
+        {
+          "label": "Norway",
+          "value": 98
+        },
+        {
+          "label": "Iceland",
+          "value": 99
+        },
+        {
+          "label": "Sweden",
+          "value": 69
+        },
+        {
+          "label": "Denmark",
+          "value": 81
+        },
+        {
+          "label": "Portugal",
+          "value": 61
+        },
+        {
+          "label": "Spain",
+          "value": 50
+        },
+        {
+          "label": "Germany",
+          "value": 52
+        },
+        {
+          "label": "France",
+          "value": 27
+        },
+        {
+          "label": "Italy",
+          "value": 41
+        },
+        {
+          "label": "Poland",
+          "value": 26
+        },
+        {
+          "label": "Netherlands",
+          "value": 47
+        },
+        {
+          "label": "Malta",
+          "value": 12
+        },
+        {
+          "label": "Luxembourg",
+          "value": 18
+        },
+        {
+          "label": "Greece",
+          "value": 50
+        }
+      ],
+      "highlight": "Norway",
+      "scale": "ones",
+      "unit": "percent",
+      "callout": "none",
+      "source": "Fictional sample data"
+    },
+    "dark": "440e6d69",
+    "light": "3acb14c4"
   },
   {
     "name": "map-world",

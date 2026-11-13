@@ -2,3 +2,4 @@ node_modules
 dist-lib
 *.tgz
 package-lock.json
+.cache

@@ -35,7 +35,7 @@ chart.summary // 'Ranked bar, 3 items, highlight USDT, $187B'
 chart.toSVG({ theme: 'light' }) // a 1080×1350 SVG string
 ```
 
-`summary` is one line a model can talk about the chart from, without seeing it. The model describes the data; the package picks the chart, does the arithmetic and draws it. There are 14 chart types, including a world choropleth, a bubble map and a grid of Brazilian states.
+`summary` is one line a model can talk about the chart from, without seeing it. The model describes the data; the package picks the chart, does the arithmetic and draws it. There are 13 chart types, including a choropleth and a bubble map of the world or of one continent.
 
 A spec takes at most 30 items, the bound in `Chart.schema`; `Chart.from` throws a `RangeError` past it, or when no value is a finite number. Values that are not finite, such as `1e400` read from JSON, are dropped.
 
@@ -49,16 +49,19 @@ chart.toSVG({ theme: 'dark', mark: { href: 'data:image/png;base64,…', width: 1
 
 ### Maps
 
-The map data is its own entry, so a host that draws no maps does not load it (about 120 KB):
+The map data is its own entry, so a host that draws no maps does not load it. `mapsFor` takes the places a spec names and returns the world (about 120 KB) with the one continent that holds them (8 to 43 KB), loaded on demand:
 
 ```js
 import { Chart } from 'qvac-charts'
-import { maps } from 'qvac-charts/maps'
+import { mapsFor } from 'qvac-charts/maps'
 
-const chart = Chart.from(spec, { maps }) // shape 'places' becomes a choropleth, a bubble map or the Brazil grid
+const maps = await mapsFor(spec.data.map((d) => d.label))
+const chart = Chart.from(spec, { maps }) // shape 'places' becomes a choropleth or, with variant 'bubbles', a bubble map
 ```
 
-Without `maps`, a spec with `shape: 'places'` is drawn as a ranking of its places.
+When every place is on one continent (Africa, Asia, Europe, North America, Oceania or South America) the chart draws that continent, closer; otherwise it draws the world. Names match in English, Portuguese, Spanish, French, German and Italian, and by ISO code. Without `maps`, or when no place is a country, a spec with `shape: 'places'` is drawn as a ranking of its places.
+
+`npm run build:continents` regenerates the continent maps from a pinned Natural Earth release, checked by its hash.
 
 ## Development
 
