@@ -1,0 +1,17 @@
+{
+  "shape": "parts",
+  "variant": "auto",
+  "title": "Where the Sprint Went",
+  "subtitle": "Share of engineering hours, last sprint",
+  "data": [
+    { "label": "Features", "value": 45 },
+    { "label": "Bug fixes", "value": 25 },
+    { "label": "Meetings", "value": 20 },
+    { "label": "Code review", "value": 10 }
+  ],
+  "highlight": "Features",
+  "unit": "percent",
+  "scale": "none",
+  "callout": "none",
+  "source": "Example data"
+}

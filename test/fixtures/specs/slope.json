@@ -1,0 +1,20 @@
+{
+  "shape": "change",
+  "variant": "auto",
+  "title": "Germany Made the Biggest NPS Jump",
+  "subtitle": "Net Promoter Score by market",
+  "from": "2024",
+  "to": "2025",
+  "data": [
+    { "label": "Brazil", "previous": 32, "value": 45 },
+    { "label": "Mexico", "previous": 28, "value": 31 },
+    { "label": "US", "previous": 40, "value": 38 },
+    { "label": "Germany", "previous": 22, "value": 35 },
+    { "label": "Japan", "previous": 18, "value": 20 }
+  ],
+  "highlight": "Germany",
+  "unit": "count",
+  "scale": "none",
+  "callout": "none",
+  "source": "Example data"
+}

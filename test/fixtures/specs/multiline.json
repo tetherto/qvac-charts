@@ -1,0 +1,28 @@
+{
+  "shape": "over-time",
+  "variant": "auto",
+  "title": "Lisbon Rents Overtook Berlin",
+  "subtitle": "Average monthly rent for a one-bedroom flat, in euros",
+  "data": [
+    { "label": "2020", "value": 1100, "group": "Lisbon" },
+    { "label": "2021", "value": 1150, "group": "Lisbon" },
+    { "label": "2022", "value": 1300, "group": "Lisbon" },
+    { "label": "2023", "value": 1450, "group": "Lisbon" },
+    { "label": "2024", "value": 1550, "group": "Lisbon" },
+    { "label": "2020", "value": 1250, "group": "Berlin" },
+    { "label": "2021", "value": 1300, "group": "Berlin" },
+    { "label": "2022", "value": 1350, "group": "Berlin" },
+    { "label": "2023", "value": 1400, "group": "Berlin" },
+    { "label": "2024", "value": 1450, "group": "Berlin" },
+    { "label": "2020", "value": 900, "group": "Madrid" },
+    { "label": "2021", "value": 950, "group": "Madrid" },
+    { "label": "2022", "value": 1050, "group": "Madrid" },
+    { "label": "2023", "value": 1150, "group": "Madrid" },
+    { "label": "2024", "value": 1250, "group": "Madrid" }
+  ],
+  "highlight": "Lisbon",
+  "unit": "eur",
+  "scale": "none",
+  "callout": "none",
+  "source": "Example data"
+}

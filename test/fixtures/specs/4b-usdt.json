@@ -1,0 +1,40 @@
+{
+  "shape": "over-time",
+  "title": "USDT circulating supply growth",
+  "subtitle": "in billions of dollars by year",
+  "data": [
+    {
+      "label": "2019",
+      "value": 4.1
+    },
+    {
+      "label": "2020",
+      "value": 21
+    },
+    {
+      "label": "2021",
+      "value": 78
+    },
+    {
+      "label": "2022",
+      "value": 66
+    },
+    {
+      "label": "2023",
+      "value": 91.5
+    },
+    {
+      "label": "2024",
+      "value": 137
+    },
+    {
+      "label": "2025",
+      "value": 186
+    }
+  ],
+  "highlight": "2025",
+  "scale": "billions",
+  "unit": "dollars",
+  "callout": "growth",
+  "source": "User data"
+}

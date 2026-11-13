@@ -1,0 +1,28 @@
+{
+  "shape": "places",
+  "map": "world",
+  "title": "Where Crypto Ownership Runs Highest",
+  "subtitle": "Share of adults who own crypto, 2025",
+  "data": [
+    { "label": "Nigeria", "value": 22 },
+    { "label": "Vietnam", "value": 21 },
+    { "label": "Turkey", "value": 19 },
+    { "label": "Argentina", "value": 18 },
+    { "label": "UAE", "value": 17 },
+    { "label": "Brazil", "value": 12 },
+    { "label": "USA", "value": 15 },
+    { "label": "Philippines", "value": 14 },
+    { "label": "UK", "value": 10 },
+    { "label": "India", "value": 7 },
+    { "label": "Germany", "value": 9 },
+    { "label": "Australia", "value": 11 },
+    { "label": "South Africa", "value": 13 },
+    { "label": "Japan", "value": 5 },
+    { "label": "Canada", "value": 10 }
+  ],
+  "highlight": "Brazil",
+  "scale": "ones",
+  "unit": "percent",
+  "callout": "none",
+  "source": "Fictional sample data"
+}

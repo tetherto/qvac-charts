@@ -1,0 +1,52 @@
+{
+  "shape": "places",
+  "title": "Ten most populous countries",
+  "subtitle": "Population by country",
+  "data": [
+    {
+      "label": "India",
+      "value": 1428
+    },
+    {
+      "label": "China",
+      "value": 1425
+    },
+    {
+      "label": "USA",
+      "value": 342
+    },
+    {
+      "label": "Indonesia",
+      "value": 280
+    },
+    {
+      "label": "Pakistan",
+      "value": 243
+    },
+    {
+      "label": "Nigeria",
+      "value": 226
+    },
+    {
+      "label": "Brazil",
+      "value": 220
+    },
+    {
+      "label": "Bangladesh",
+      "value": 173
+    },
+    {
+      "label": "Russia",
+      "value": 144
+    },
+    {
+      "label": "Mexico",
+      "value": 133
+    }
+  ],
+  "highlight": "India",
+  "scale": "millions",
+  "unit": "number",
+  "callout": "ratio",
+  "source": "Approximate, from model knowledge"
+}

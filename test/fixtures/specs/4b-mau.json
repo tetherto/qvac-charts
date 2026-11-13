@@ -1,0 +1,52 @@
+{
+  "shape": "over-time",
+  "title": "Monthly active users grew steadily through 2025",
+  "subtitle": "Monthly active users in 2025",
+  "data": [
+    {
+      "label": "January",
+      "value": 12000,
+      "group": "2025"
+    },
+    {
+      "label": "February",
+      "value": 15000,
+      "group": "2025"
+    },
+    {
+      "label": "March",
+      "value": 19000,
+      "group": "2025"
+    },
+    {
+      "label": "April",
+      "value": 22000,
+      "group": "2025"
+    },
+    {
+      "label": "May",
+      "value": 30000,
+      "group": "2025"
+    },
+    {
+      "label": "June",
+      "value": 41000,
+      "group": "2025"
+    }
+  ],
+  "highlight": "June",
+  "scale": "ones",
+  "unit": "number",
+  "callout": "growth",
+  "source": "User data",
+  "annotations": [
+    {
+      "label": "January",
+      "text": "Started the year with 12,000 users."
+    },
+    {
+      "label": "June",
+      "text": "Reached 41,000 users, more than triple the start."
+    }
+  ]
+}

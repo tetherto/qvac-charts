@@ -1,0 +1,52 @@
+{
+  "shape": "places",
+  "title": "Vendas por estado do Brasil",
+  "subtitle": "Milhares de reais",
+  "data": [
+    {
+      "label": "São Paulo",
+      "value": 820
+    },
+    {
+      "label": "Rio de Janeiro",
+      "value": 410
+    },
+    {
+      "label": "Minas Gerais",
+      "value": 380
+    },
+    {
+      "label": "Paraná",
+      "value": 260
+    },
+    {
+      "label": "Rio Grande do Sul",
+      "value": 240
+    },
+    {
+      "label": "Santa Catarina",
+      "value": 210
+    },
+    {
+      "label": "Bahia",
+      "value": 190
+    },
+    {
+      "label": "Distrito Federal",
+      "value": 170
+    },
+    {
+      "label": "Pernambuco",
+      "value": 150
+    },
+    {
+      "label": "Goiás",
+      "value": 140
+    }
+  ],
+  "highlight": "São Paulo",
+  "scale": "thousands",
+  "unit": "reais",
+  "callout": "ratio",
+  "source": "User data"
+}

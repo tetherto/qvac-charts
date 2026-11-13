@@ -1,0 +1,22 @@
+{
+  "type": "line",
+  "title": "USDT's Climb Past $180 Billion",
+  "subtitle": "Tether's circulating supply at the end of each year, in billions of U.S. dollars",
+  "data": [
+    { "label": "2019", "value": 4.1 },
+    { "label": "2020", "value": 21 },
+    { "label": "2021", "value": 78 },
+    {
+      "label": "2022",
+      "value": 66,
+      "note": "First yearly drop, after the Terra and FTX collapses"
+    },
+    { "label": "2023", "value": 91.5 },
+    { "label": "2024", "value": 137 },
+    { "label": "2025", "value": 186, "note": "Over $50B added in a single year" }
+  ],
+  "prefix": "$",
+  "suffix": "B",
+  "decimals": 0,
+  "source": "Tether attestations, The Block, CryptoSlate. 2019-2022 and 2024 year-end values approximate."
+}

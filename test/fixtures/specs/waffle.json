@@ -1,0 +1,15 @@
+{
+  "shape": "parts",
+  "variant": "auto",
+  "title": "Most Users Still Skip 2FA",
+  "subtitle": "Accounts with two-factor authentication enabled",
+  "data": [
+    { "label": "2FA enabled", "value": 28 },
+    { "label": "No 2FA", "value": 72 }
+  ],
+  "highlight": "2FA enabled",
+  "unit": "percent",
+  "scale": "none",
+  "callout": "none",
+  "source": "Example data"
+}

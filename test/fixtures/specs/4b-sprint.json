@@ -1,0 +1,29 @@
+{
+  "shape": "parts",
+  "title": "Team time allocation",
+  "subtitle": "Time spent by sprint",
+  "data": [
+    {
+      "label": "Features",
+      "value": 45
+    },
+    {
+      "label": "Bugs",
+      "value": 25
+    },
+    {
+      "label": "Meetings",
+      "value": 20
+    },
+    {
+      "label": "Code review",
+      "value": 10
+    }
+  ],
+  "highlight": "Features",
+  "scale": "ones",
+  "unit": "percent",
+  "callout": "none",
+  "source": "User data",
+  "annotations": []
+}

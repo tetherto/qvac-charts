@@ -1,0 +1,97 @@
+{
+  "shape": "over-time",
+  "title": "Lisbon rent grows fastest among three cities",
+  "subtitle": "One-bedroom rent in euros by city and year",
+  "data": [
+    {
+      "label": "Lisbon",
+      "value": 1100,
+      "group": "2020"
+    },
+    {
+      "label": "Lisbon",
+      "value": 1150,
+      "group": "2021"
+    },
+    {
+      "label": "Lisbon",
+      "value": 1300,
+      "group": "2022"
+    },
+    {
+      "label": "Lisbon",
+      "value": 1450,
+      "group": "2023"
+    },
+    {
+      "label": "Lisbon",
+      "value": 1550,
+      "group": "2024"
+    },
+    {
+      "label": "Berlin",
+      "value": 1250,
+      "group": "2020"
+    },
+    {
+      "label": "Berlin",
+      "value": 1300,
+      "group": "2021"
+    },
+    {
+      "label": "Berlin",
+      "value": 1350,
+      "group": "2022"
+    },
+    {
+      "label": "Berlin",
+      "value": 1400,
+      "group": "2023"
+    },
+    {
+      "label": "Berlin",
+      "value": 1450,
+      "group": "2024"
+    },
+    {
+      "label": "Madrid",
+      "value": 900,
+      "group": "2020"
+    },
+    {
+      "label": "Madrid",
+      "value": 950,
+      "group": "2021"
+    },
+    {
+      "label": "Madrid",
+      "value": 1050,
+      "group": "2022"
+    },
+    {
+      "label": "Madrid",
+      "value": 1150,
+      "group": "2023"
+    },
+    {
+      "label": "Madrid",
+      "value": 1250,
+      "group": "2024"
+    }
+  ],
+  "highlight": "Lisbon",
+  "scale": "ones",
+  "unit": "euros",
+  "callout": "growth",
+  "source": "User data",
+  "annotations": [
+    {
+      "label": "Lisbon",
+      "text": "Reaches 1550 euros in 2024, the highest of the three cities."
+    },
+    {
+      "label": "Madrid",
+      "text": "Stays the most affordable city throughout the period."
+    }
+  ]
+}

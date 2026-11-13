@@ -1,0 +1,44 @@
+{
+  "shape": "parts",
+  "title": "Unemployment rate by Brazilian state",
+  "subtitle": "Percent",
+  "data": [
+    {
+      "label": "Bahia (BA)",
+      "value": 11.1
+    },
+    {
+      "label": "Pernambuco (PE)",
+      "value": 10.9
+    },
+    {
+      "label": "Rio de Janeiro (RJ)",
+      "value": 9.6
+    },
+    {
+      "label": "Amazonas (AM)",
+      "value": 8.9
+    },
+    {
+      "label": "São Paulo (SP)",
+      "value": 6.9
+    },
+    {
+      "label": "Mato Grosso (MT)",
+      "value": 3.3
+    },
+    {
+      "label": "Santa Catarina (SC)",
+      "value": 3.2
+    },
+    {
+      "label": "Rondônia (RO)",
+      "value": 3.1
+    }
+  ],
+  "highlight": "Bahia (BA)",
+  "scale": "ones",
+  "unit": "percent",
+  "callout": "ratio",
+  "source": "User data"
+}

@@ -1,0 +1,82 @@
+{
+  "shape": "parts",
+  "title": "Sales Mix by Region",
+  "subtitle": "Channel breakdown by region in percent",
+  "data": [
+    {
+      "label": "North",
+      "value": 60,
+      "group": "Online"
+    },
+    {
+      "label": "North",
+      "value": 30,
+      "group": "Retail"
+    },
+    {
+      "label": "North",
+      "value": 10,
+      "group": "Partners"
+    },
+    {
+      "label": "South",
+      "value": 40,
+      "group": "Online"
+    },
+    {
+      "label": "South",
+      "value": 45,
+      "group": "Retail"
+    },
+    {
+      "label": "South",
+      "value": 15,
+      "group": "Partners"
+    },
+    {
+      "label": "East",
+      "value": 55,
+      "group": "Online"
+    },
+    {
+      "label": "East",
+      "value": 25,
+      "group": "Retail"
+    },
+    {
+      "label": "East",
+      "value": 20,
+      "group": "Partners"
+    },
+    {
+      "label": "West",
+      "value": 35,
+      "group": "Online"
+    },
+    {
+      "label": "West",
+      "value": 50,
+      "group": "Retail"
+    },
+    {
+      "label": "West",
+      "value": 15,
+      "group": "Partners"
+    }
+  ],
+  "highlight": "East",
+  "scale": "ones",
+  "unit": "percent",
+  "callout": "ratio",
+  "source": "User data",
+  "annotations": [
+    {
+      "label": "East",
+      "text": "Highest online sales at 55%"
+    },
+    {
+      "label": "West",
+      "text": "Highest retail sales at 50%"
+    }
+  ]
+}

@@ -8,4 +8,8 @@ While the major version is `0`, a breaking change bumps the minor version.
 
 ## [Unreleased]
 
+### Added
+
+- `Chart.from(spec)` reads a chart spec and `chart.toSVG({ theme })` draws it as a 1080×1350 SVG, dark or light. `Chart.schema` is the spec's JSON Schema, for a model to fill. The renderer picks one of 14 chart types from the shape of the data.
+
 [Unreleased]: https://github.com/tetherto/qvac-charts/commits/main

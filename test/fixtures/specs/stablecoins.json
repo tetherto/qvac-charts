@@ -1,0 +1,18 @@
+{
+  "type": "bubbles",
+  "title": "Who Holds the Stablecoin Market",
+  "subtitle": "Circulating supply of the largest U.S. dollar stablecoins, mid-2026, in billions",
+  "data": [
+    { "label": "USDT", "value": 187 },
+    { "label": "USDC", "value": 75 },
+    { "label": "USDe", "value": 14.8 },
+    { "label": "USDS", "value": 8 },
+    { "label": "DAI", "value": 4.6 }
+  ],
+  "highlight": "USDT",
+  "prefix": "$",
+  "suffix": "B",
+  "decimals": 0,
+  "callout": { "value": "~59%", "text": "of all stablecoin supply is USDT" },
+  "source": "The Block, Kucoin, DefiLlama-based trackers, May-Aug 2026. Figures vary by source and date; approximate."
+}
