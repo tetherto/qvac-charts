@@ -33,6 +33,14 @@ chart.toSVG({ theme: 'light' }) // a 1080×1350 SVG string
 
 A spec takes at most 30 items, the bound in `Chart.schema`; `Chart.from` throws a `RangeError` past it, or when no value is a finite number. Values that are not finite, such as `1e400` read from JSON, are dropped.
 
+### Brand mark
+
+The package ships no logo. A host that wants its mark in the footer passes it to `toSVG`; the source line then wraps short of it:
+
+```js
+chart.toSVG({ theme: 'dark', mark: { href: 'data:image/png;base64,…', width: 110, height: 48 } })
+```
+
 ### Maps
 
 The map data is its own entry, so a host that draws no maps does not load it (about 120 KB):
