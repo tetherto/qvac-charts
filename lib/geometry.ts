@@ -262,7 +262,7 @@ export function ceiling(values: ReadonlyArray<number>): number {
 }
 
 export function ticks(max: number): number[] {
-  if (!(max > 0)) {
+  if (!(max > 0) || !Number.isFinite(max)) {
     return [0]
   }
 

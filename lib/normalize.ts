@@ -1,5 +1,6 @@
 import { canonical, mapFor, region, type Maps } from './places.ts'
 import { pick } from './pick.ts'
+import { MAX_ITEMS } from './schema.ts'
 import type { Callout, Chart, ChartType, Row, Spec } from './spec.ts'
 
 // The spec as it moves through normalization: rows may gain a region, a change gains its moments.
@@ -48,7 +49,11 @@ const PERIOD = /^(\d{4}|q[1-4]|jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)/
 
 // Derived numbers are computed here, never by the model: small models get the arithmetic wrong.
 export function normalize(input: Spec, maps: Maps | undefined): Chart {
-  const spec = arranged(input, maps)
+  if (input.data.length > MAX_ITEMS) {
+    throw new RangeError(`A chart takes at most ${MAX_ITEMS} items, got ${input.data.length}`)
+  }
+
+  const spec = arranged(finite(input), maps)
   const notes = new Map((spec.annotations ?? []).map((a) => [a.label, a.text]))
 
   // Back to base units first, so "4800 thousands" is shown as 4.8M, not 4,800K.
@@ -107,6 +112,19 @@ function largest(max: number): number {
   }
 
   return 1e3
+}
+
+// JSON reads 1e400 as Infinity; a value no scale can hold is dropped rather than drawn.
+function finite(spec: Spec): Spec {
+  const data = spec.data
+    .filter((d) => Number.isFinite(d.value))
+    .map((d) => ({ ...d, previous: Number.isFinite(d.previous) ? d.previous : undefined }))
+
+  if (data.length === 0) {
+    throw new RangeError('A chart needs at least one finite value')
+  }
+
+  return { ...spec, data }
 }
 
 function arranged(input: Spec, maps: Maps | undefined): Draft {

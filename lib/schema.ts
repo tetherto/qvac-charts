@@ -1,5 +1,8 @@
 // The grammar enforces every bound here, so each one is a mistake the model can no longer make.
 
+// Layouts such as bubble packing grow with the cube of the count; past this a chart stalls.
+export const MAX_ITEMS = 30
+
 const item = {
   type: 'object',
   properties: {
@@ -35,7 +38,7 @@ export const chartSchema = {
     variant: { enum: VARIANTS },
     title: { type: 'string', maxLength: 64 },
     subtitle: { type: 'string', maxLength: 110 },
-    data: { type: 'array', items: item, minItems: 2, maxItems: 30 },
+    data: { type: 'array', items: item, minItems: 2, maxItems: MAX_ITEMS },
     highlight: { type: 'string', maxLength: 32 },
     scale: { enum: SCALES },
     unit: { enum: UNITS },

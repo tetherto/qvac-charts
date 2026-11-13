@@ -31,6 +31,8 @@ chart.toSVG({ theme: 'light' }) // a 1080×1350 SVG string
 
 `summary` is one line a model can talk about the chart from, without seeing it. The model describes the data; the package picks the chart, does the arithmetic and draws it. There are 14 chart types, including a world choropleth, a bubble map and a grid of Brazilian states.
 
+A spec takes at most 30 items, the bound in `Chart.schema`; `Chart.from` throws a `RangeError` past it, or when no value is a finite number. Values that are not finite, such as `1e400` read from JSON, are dropped.
+
 ### Maps
 
 The map data is its own entry, so a host that draws no maps does not load it (about 120 KB):
