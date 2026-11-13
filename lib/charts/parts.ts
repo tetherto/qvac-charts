@@ -100,7 +100,8 @@ export function treemap({ out, spec, t, b }: Draw): void {
   const groups = [...new Set(items.map((d) => d.group).filter((g): g is string => Boolean(g)))]
   let top = b.y
 
-  if (groups.length) {
+  // One group explains nothing, and its swatch could match no cell: cells are coloured per item then.
+  if (groups.length > 1) {
     let x = b.x
 
     for (const g of groups) {

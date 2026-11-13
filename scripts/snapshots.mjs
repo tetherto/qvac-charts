@@ -2,6 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import { Chart } from '../index.ts'
+import { maps } from '../maps.ts'
 import { fnv } from '../test/helpers/fnv.ts'
 
 // Rerun only for an intended change to the drawing, after looking at the charts it renders.
@@ -15,8 +16,8 @@ const cases = fs
   .sort()
   .map((file) => {
     const spec = JSON.parse(fs.readFileSync(path.join(dir, file), 'utf8'))
-    const dark = Chart.from(spec).toSVG({ theme: 'dark' })
-    const light = Chart.from(spec).toSVG({ theme: 'light' })
+    const dark = Chart.from(spec, { maps }).toSVG({ theme: 'dark' })
+    const light = Chart.from(spec, { maps }).toSVG({ theme: 'light' })
     return { name: file.slice(0, -'.json'.length), spec, dark: fnv(dark), light: fnv(light) }
   })
 

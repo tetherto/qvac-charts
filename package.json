@@ -5,7 +5,8 @@
   "type": "module",
   "exports": {
     "./package": "./package.json",
-    ".": "./index.ts"
+    ".": "./index.ts",
+    "./maps": "./maps.ts"
   },
   "files": [
     "package.json",
@@ -24,9 +25,10 @@
     "test:generate": "brittle-make-test test/all.mjs test/*.ts",
     "build:lib": "node scripts/build-lib.mjs",
     "build:world": "node scripts/project-world.mjs lib/maps/world.ts",
-    "test:snapshots": "node scripts/snapshots.mjs"
+    "snapshots:update": "node scripts/snapshots.mjs"
   },
   "devDependencies": {
+    "bare-runtime": "1.36.0",
     "brittle": "^4.5.0",
     "d3-geo": "3.1.1",
     "holepunch-types": "^0.2.3",

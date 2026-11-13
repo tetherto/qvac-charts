@@ -1,10 +1,12 @@
-import { canonical, mapFor, region, type MapName } from './maps/index.ts'
+import { canonical, mapFor, region, type Maps } from './places.ts'
 import { pick } from './pick.ts'
+import { MAX_ITEMS } from './schema.ts'
 import type { Callout, Chart, ChartType, Row, Spec } from './spec.ts'
 
 // The spec as it moves through normalization: rows may gain a region, a change gains its moments.
 export interface Draft extends Omit<Spec, 'data'> {
   data: ReadonlyArray<Row>
+  maps?: Maps | undefined
 }
 
 const prefixes: Partial<Record<string, string>> = {
@@ -14,6 +16,14 @@ const prefixes: Partial<Record<string, string>> = {
   reais: 'R$'
 }
 const scales: Partial<Record<string, number>> = { K: 1e3, M: 1e6, B: 1e9, T: 1e12 }
+// The multiplier a spec's numbers are written in: a scale word, or a letter in older specs.
+const multipliers: Partial<Record<string, number>> = {
+  ...scales,
+  thousands: 1e3,
+  millions: 1e6,
+  billions: 1e9,
+  trillions: 1e12
+}
 const scaleWords: Partial<Record<string, string>> = {
   ones: '',
   thousands: 'K',
@@ -33,24 +43,27 @@ const PARTS: ReadonlyArray<ChartType> = [
   'tiles'
 ]
 
+const MAP_TYPES: ReadonlyArray<ChartType> = ['choropleth', 'bubble-map', 'tiles']
+
 const PERIOD = /^(\d{4}|q[1-4]|jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)/i
 
 // Derived numbers are computed here, never by the model: small models get the arithmetic wrong.
-export function normalize(input: Spec): Chart {
-  const spec = arranged(input)
+export function normalize(input: Spec, maps: Maps | undefined): Chart {
+  if (input.data.length > MAX_ITEMS) {
+    throw new RangeError(`A chart takes at most ${MAX_ITEMS} items, got ${input.data.length}`)
+  }
+
+  const spec = arranged(finite(input), maps)
   const notes = new Map((spec.annotations ?? []).map((a) => [a.label, a.text]))
 
   // Back to base units first, so "4800 thousands" is shown as 4.8M, not 4,800K.
   const raw = Math.max(...spec.data.map((d) => Math.abs(d.value)))
-  const named =
-    spec.unit === 'percent'
-      ? 1
-      : (scales[scaleWords[spec.scale ?? ''] ?? ''] ?? scales[spec.scale ?? ''] ?? 1)
+  const named = spec.unit === 'percent' ? 1 : (multipliers[spec.scale ?? ''] ?? 1)
 
   // Nobody writes "1,460,000,000 million": numbers that large are already in full.
   const given = raw >= 1e5 ? 1 : named
   const max = raw * given
-  const rescale = max >= 1e4 ? ([1e12, 1e9, 1e6, 1e3].find((s) => max >= s) ?? 1) : 1
+  const rescale = max >= 1e4 ? largest(max) : 1
   const k = given / rescale
   const data: ReadonlyArray<Row> = spec.data.map((d) => ({
     ...d,
@@ -85,17 +98,51 @@ export function normalize(input: Spec): Chart {
     suffix,
     decimals: decimals(spec, { data, scaled }),
     map: spec.map ?? 'world',
+    maps,
     from: spec.from,
     to: spec.to,
     annotations: spec.annotations ?? []
   }
 }
 
-function arranged(input: Spec): Draft {
+// The scale a number of this size is shown in: T, B, M or K.
+function largest(max: number): number {
+  for (const s of [1e12, 1e9, 1e6]) {
+    if (max >= s) return s
+  }
+
+  return 1e3
+}
+
+// JSON reads 1e400 as Infinity; a value no scale can hold is dropped rather than drawn.
+function finite(spec: Spec): Spec {
+  const data = spec.data
+    .filter((d) => Number.isFinite(d.value))
+    .map((d) => ({ ...d, previous: Number.isFinite(d.previous) ? d.previous : undefined }))
+
+  if (data.length === 0) {
+    throw new RangeError('A chart needs at least one finite value')
+  }
+
+  return { ...spec, data }
+}
+
+function arranged(input: Spec, maps: Maps | undefined): Draft {
   let spec: Draft = unswap(input)
 
+  // A named map chart is a places spec; the map it lands on comes from the names, not the type.
+  if (spec.type && MAP_TYPES.includes(spec.type)) {
+    spec = {
+      ...spec,
+      shape: 'places',
+      type: undefined,
+      variant: spec.type === 'bubble-map' ? 'bubbles' : spec.variant
+    }
+  }
+
+  // Without the map data a place chart is still a ranking of its places.
   if (spec.shape === 'places') {
-    spec = places(spec)
+    spec = maps ? places(spec, maps) : { ...spec, shape: 'ranking' }
   }
 
   if (spec.shape === 'change' && !spec.data.some((d) => d.previous !== undefined)) {
@@ -155,36 +202,40 @@ function unswap(spec: Spec): Draft {
 }
 
 // Labels arrive as any name the model wrote ("USA", "Vietnã", "SP"); one region per canonical name.
-function places(spec: Draft): Draft {
-  const map = mapFor(spec.data.map((d) => d.label))
+function places(spec: Draft, maps: Maps): Draft {
+  const map = mapFor(
+    maps,
+    spec.data.map((d) => d.label)
+  )
   const seen = new Set<string>()
   const data: Row[] = []
 
   for (const d of spec.data) {
-    const label = canonical(map, d.label) ?? d.label
+    const label = canonical(maps, { map, label: d.label }) ?? d.label
 
     if (seen.has(label)) {
       continue
     }
 
     seen.add(label)
-    data.push({ ...d, label, region: region(map, d.label) })
+    data.push({ ...d, label, region: region(maps, { map, label: d.label }) })
   }
 
   return {
     ...spec,
     map,
+    maps,
     data,
-    highlight: canonical(map, spec.highlight) ?? spec.highlight,
+    highlight: canonical(maps, { map, label: spec.highlight }) ?? spec.highlight,
     annotations: []
   }
 }
 
 // A change arrives as each item twice, grouped by moment; the slope wants one row per item.
 function pairs(spec: Draft): Draft {
-  const [from, to] = [...new Set(spec.data.map((d) => d.group))].sort()
-  const at = (label: string, moment: string | undefined): number | undefined =>
-    spec.data.find((d) => d.label === label && d.group === moment)?.value
+  const [from, to] = chronological([...new Set(spec.data.map((d) => d.group ?? ''))])
+  const at = (label: string, moment: string): number | undefined =>
+    spec.data.find((d) => d.label === label && (d.group ?? '') === moment)?.value
   const data: Row[] = []
 
   for (const label of new Set(spec.data.map((d) => d.label))) {
@@ -201,6 +252,45 @@ function pairs(spec: Draft): Draft {
   return { ...spec, from, to, data }
 }
 
+const MONTHS = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec']
+
+// A moment's place in time in months, from a year, a quarter or a month name; undefined if none.
+function when(moment: string): number | undefined {
+  const year = /\d{4}/.exec(moment)
+  const quarter = /\bq([1-4])\b/i.exec(moment)
+  const month = MONTHS.findIndex((m) => new RegExp(`\\b${m}`, 'i').test(moment))
+
+  if (!year && !quarter && month === -1) {
+    return undefined
+  }
+
+  const months = Number(year?.[0] ?? 0) * 12
+
+  if (quarter) {
+    return months + (Number(quarter[1]) - 1) * 3
+  }
+
+  return month === -1 ? months : months + month
+}
+
+interface Moment {
+  m: string
+  t: number
+}
+
+// Moments in time order when each names a time, else in the order the model wrote them.
+function chronological(moments: ReadonlyArray<string>): string[] {
+  const timed = moments
+    .map((m) => ({ m, t: when(m) }))
+    .filter((x): x is Moment => x.t !== undefined)
+
+  if (timed.length < moments.length) {
+    return [...moments]
+  }
+
+  return timed.sort((a, b) => a.t - b.t).map(({ m }) => m)
+}
+
 interface DeriveContext {
   data: ReadonlyArray<Row>
   highlight: string | undefined
@@ -212,6 +302,10 @@ function derive(kind: string, { data, highlight }: DeriveContext): Callout | und
   if (kind === 'share') {
     const total = data.reduce((s, d) => s + d.value, 0)
     const d = data.find((x) => x.label === highlight) ?? sorted[0]
+
+    if (total <= 0) {
+      return undefined
+    }
 
     return { value: Math.round((d.value / total) * 100) + '%', text: `of the total is ${d.label}` }
   }
@@ -227,8 +321,14 @@ function derive(kind: string, { data, highlight }: DeriveContext): Callout | und
   return undefined
 }
 
-function growth(data: ReadonlyArray<Row>): Callout {
+// Growth is measured against the first value, so a series starting at or below zero has none.
+function growth(data: ReadonlyArray<Row>): Callout | undefined {
   const [a, b] = [data[0], data[data.length - 1]]
+
+  if (a.value <= 0) {
+    return undefined
+  }
+
   const x = b.value / a.value
   const value = x >= 10 ? x.toFixed(0) + '×' : (x >= 1 ? '+' : '') + Math.round((x - 1) * 100) + '%'
 
@@ -238,7 +338,7 @@ function growth(data: ReadonlyArray<Row>): Callout {
 function ratio(sorted: ReadonlyArray<Row>): Callout | undefined {
   const [a, b] = sorted
 
-  if (a.value / b.value < 1.5) {
+  if (!b || b.value <= 0 || a.value / b.value < 1.5) {
     return undefined
   }
 

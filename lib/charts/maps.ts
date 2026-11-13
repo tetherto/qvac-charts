@@ -1,12 +1,19 @@
 import { callout, W, type Draw, type Place } from '../frame.ts'
-import type { Rect } from '../geometry.ts'
-import { TILES, WORLD, regionCount, type GeoRegion } from '../maps/index.ts'
-import type { Row } from '../spec.ts'
+import { ceiling, type Rect } from '../geometry.ts'
+import { regionCount, type GeoRegion, type Maps } from '../places.ts'
+import type { Chart, Row } from '../spec.ts'
 import { halo, text } from '../svg.ts'
 import { contrast, ramp, type Ramp } from '../themes.ts'
 
 const byValue = (data: ReadonlyArray<Row>): Row[] => [...data].sort((a, c) => c.value - a.value)
-const find = (label: string): GeoRegion | undefined => WORLD.regions.find((x) => x.name === label)
+// Map charts are only picked when the host passed map data, so a missing one is a bug upstream.
+function atlas(spec: Chart): Maps {
+  if (!spec.maps) {
+    throw new Error(`${spec.type} needs the map data from @qvac/charts/maps`)
+  }
+
+  return spec.maps
+}
 
 export function choropleth(d: Draw): void {
   const { spec, t, b } = d
@@ -26,12 +33,12 @@ export function choropleth(d: Draw): void {
 export function bubbleMap(d: Draw): void {
   const { out, spec, t, b } = d
   const y = world(d, () => t.faint)
-  const k = b.w / WORLD.width
+  const k = b.w / atlas(spec).world.width
   const top = byValue(spec.data)
-  const max = top[0].value
+  const max = ceiling(top.map((r) => r.value))
 
   for (const row of top) {
-    const r = find(row.label)
+    const r = atlas(spec).world.regions.find((x) => x.name === row.label)
 
     if (!r) {
       continue
@@ -56,7 +63,7 @@ export function bubbleMap(d: Draw): void {
 export function tiles(d: Draw): void {
   const { out, spec, t, b, fmt } = d
   const shading = ramp(spec.data, t)
-  const regions = TILES[spec.map]
+  const regions = atlas(spec).tiles[spec.map]
   const cols = Math.max(...regions.map((r) => r.col)) + 1
   const rows = Math.max(...regions.map((r) => r.row)) + 1
   const side = Math.min(b.h / rows, (b.w * 0.62) / cols)
@@ -139,30 +146,35 @@ function ranking({ out, spec, t, fmt }: Draw, { x, y: top, w }: Place): void {
 
 // Draws every country and returns where the map ends.
 function world({ out, spec, t, b }: Draw, fill: (row: Row | undefined) => string): number {
-  const k = b.w / WORLD.width
+  const k = b.w / atlas(spec).world.width
   const byName = new Map(spec.data.map((row) => [row.label, row]))
-  const shapes = WORLD.regions.map((r) => {
+  const lit = (r: GeoRegion): boolean => {
+    const row = byName.get(r.name)
+
+    return row !== undefined && row.label === spec.highlight
+  }
+  const regions = atlas(spec).world.regions
+
+  // The highlight is drawn last so its outline is not covered by a neighbour.
+  const shapes = [...regions.filter((r) => !lit(r)), ...regions.filter(lit)].map((r) => {
     const row = byName.get(r.name)
     const on = row && row.label === spec.highlight
 
     return `<path d="${r.d}" fill="${fill(row)}" stroke="${on ? t.text : t.bg}" stroke-width="${(on ? 2.5 : 0.6) / k}"/>`
   })
-  const lit = (s: string): number => (s.includes(`stroke="${t.text}"`) ? 1 : 0)
 
-  // The highlight is drawn last so its outline is not covered by a neighbour.
-  shapes.sort((a, c) => lit(a) - lit(c))
   out.push(`<g transform="translate(${b.x},${b.y}) scale(${k})">${shapes.join('')}</g>`)
 
-  return b.y + WORLD.height * k
+  return b.y + atlas(spec).world.height * k
 }
 
 // Values on the map for the largest few, skipping any that would land on a label already placed.
 function mapLabels({ out, spec, t, b, fmt }: Draw, items: ReadonlyArray<Row>): void {
-  const k = b.w / WORLD.width
+  const k = b.w / atlas(spec).world.width
   const placed: Array<{ x: number; y: number }> = []
 
   for (const row of new Set(items)) {
-    const r = find(row.label)
+    const r = atlas(spec).world.regions.find((x) => x.name === row.label)
 
     if (!r) {
       continue
@@ -215,7 +227,7 @@ function legend(
     text(fmt(hi), { x: x + w, y: y + 50, size: 22, weight: 700, fill: t.muted, anchor: 'end' })
   )
 
-  if (spec.data.length >= regionCount(spec.map)) {
+  if (spec.data.length >= regionCount(atlas(spec), spec.map)) {
     return
   }
 

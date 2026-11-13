@@ -56,7 +56,9 @@ export function wrap(str: string, { width, size }: Measure): string[] {
 
 // Bare and Node differ in the last bit of sin and cos; two decimals keep their SVG identical.
 export function fixed(svg: string): string {
-  return svg.replace(/="[^"]*"/g, (attr) =>
-    attr.replace(/-?\d+\.\d{3,}/g, (n) => String(Math.round(Number(n) * 100) / 100))
+  return svg.replace(/<[^>]+>/g, (tag) =>
+    tag.replace(/="[^"]*"/g, (attr) =>
+      attr.replace(/-?\d+\.\d{3,}/g, (n) => String(Math.round(Number(n) * 100) / 100))
+    )
   )
 }

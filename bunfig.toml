@@ -1,0 +1,4 @@
+[install]
+ignoreScripts = true
+linker = "hoisted"
+minimumReleaseAge = 604800

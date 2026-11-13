@@ -14,13 +14,18 @@ jobs:
     name: Publish
     steps:
       - uses: holepunchto/actions/node-base@v1
-      - run: npm run build:lib
+      # before npm has the version, so a missing changelog section stops the run
+      - run: node scripts/release-notes.mjs "$GITHUB_REF_NAME" > "$RUNNER_TEMP/notes.md"
+      # built from the reviewed bun.lock, not from what npm resolves today
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+        with:
+          bun-version: latest
+      - run: bun install --frozen-lockfile
+      - run: node scripts/build-lib.mjs
       # exports point at dist-lib only in the artifact; the repo's lanes resolve source
       - run: node scripts/prepare-publish.mjs
       - uses: holepunchto/actions/publish@v1
       # the publish action creates the release with an empty body
-      - run: |
-          node scripts/release-notes.mjs "$GITHUB_REF_NAME" > "$RUNNER_TEMP/notes.md"
-          gh release edit "$GITHUB_REF_NAME" --notes-file "$RUNNER_TEMP/notes.md"
+      - run: gh release edit "$GITHUB_REF_NAME" --notes-file "$RUNNER_TEMP/notes.md"
         env:
           GH_TOKEN: ${{ github.token }}

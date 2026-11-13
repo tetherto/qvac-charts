@@ -31,15 +31,30 @@ chart.toSVG({ theme: 'light' }) // a 1080×1350 SVG string
 
 `summary` is one line a model can talk about the chart from, without seeing it. The model describes the data; the package picks the chart, does the arithmetic and draws it. There are 14 chart types, including a world choropleth, a bubble map and a grid of Brazilian states.
 
+A spec takes at most 30 items, the bound in `Chart.schema`; `Chart.from` throws a `RangeError` past it, or when no value is a finite number. Values that are not finite, such as `1e400` read from JSON, are dropped.
+
+### Maps
+
+The map data is its own entry, so a host that draws no maps does not load it (about 120 KB):
+
+```js
+import { Chart } from '@qvac/charts'
+import { maps } from '@qvac/charts/maps'
+
+const chart = Chart.from(spec, { maps }) // shape 'places' becomes a choropleth, a bubble map or the Brazil grid
+```
+
+Without `maps`, a spec with `shape: 'places'` is drawn as a ranking of its places.
+
 ## Development
 
 ```sh
-npm install
-npm run lint
-npm test
+bun install
+bun run lint
+bun run test
 ```
 
-`npm test` runs the suite on Node and on Bare. The snapshot tests hash the SVG of every spec in `test/fixtures/specs/`; after an intended change to the drawing, look at the charts and run `npm run test:snapshots` to record the new hashes. `npm run build:lib` compiles the TypeScript source to `dist-lib/`, which is what the package publishes.
+Dependencies install with bun from `bun.lock`; `bunfig.toml` skips install scripts and any release younger than seven days. `bun run test` runs the suite on Node and on Bare (pinned by `bare-runtime`). The snapshot tests hash the SVG of every spec in `test/fixtures/specs/`; after an intended change to the drawing, look at the charts and run `bun run snapshots:update` to record the new hashes. `bun run build:lib` compiles the TypeScript source to `dist-lib/`, which is what the package publishes.
 
 ## License
 

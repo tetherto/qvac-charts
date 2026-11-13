@@ -8,6 +8,9 @@ async function runTests() {
   test.pause()
 
   await test.load(import.meta.resolve('./basic.ts'))
+  await test.load(import.meta.resolve('./charts.ts'))
+  await test.load(import.meta.resolve('./maps.ts'))
+  await test.load(import.meta.resolve('./normalize.ts'))
   await test.load(import.meta.resolve('./snapshots.ts'))
 
   test.resume()
