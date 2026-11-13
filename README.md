@@ -2,6 +2,12 @@
 
 Renders a small JSON chart spec, written by a local model, into an SVG in an editorial style. No runtime dependencies; runs on Bare and Node.
 
+## Install
+
+```sh
+npm install qvac-charts
+```
+
 ## Usage
 
 ```js
