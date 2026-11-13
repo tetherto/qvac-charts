@@ -81,3 +81,26 @@ test('a mark href cannot break out of its attribute', (t) => {
 
   t.ok(svg.includes('href="x&quot; onload=&quot;alert(1)"'))
 })
+
+test('a mark href keeps its digits and a long one renders quickly', (t) => {
+  const spec: Spec = {
+    ...base,
+    shape: 'ranking',
+    data: [
+      { label: 'a', value: 2 },
+      { label: 'b', value: 1 }
+    ],
+    callout: 'none'
+  }
+  const chart = Chart.from(spec)
+  const start = Date.now()
+  const long = chart.toSVG({ mark: { href: '9'.repeat(200000), width: 10, height: 10 } })
+
+  t.ok(Date.now() - start < 1000)
+  t.ok(long.includes('9'.repeat(200000)))
+  t.ok(
+    chart
+      .toSVG({ mark: { href: 'logo-1.23456.png', width: 10, height: 10 } })
+      .includes('href="logo-1.23456.png"')
+  )
+})
