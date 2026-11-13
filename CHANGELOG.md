@@ -8,17 +8,19 @@ While the major version is `0`, a breaking change bumps the minor version.
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-11-13
+
 ### Added
 
-- `mapsFor(labels)` in `qvac-charts/maps` returns the world and, loaded on demand, the continent that holds the places. A places chart whose countries are all on one continent draws that continent: Africa, Asia, Europe, North America, Oceania or South America. Small countries the world map leaves out, such as Malta or Singapore, are drawn there, and their names match in six languages and by ISO code.
+- `mapsFor(labels)` in `qvac-charts/maps` returns the world and, loaded on demand, the continent that holds the places. A places chart whose countries are all on one continent draws that continent: Africa, Asia, Europe, North America, Oceania or South America. Small countries the world map leaves out, such as Malta or Singapore, are drawn there, and their names match in six languages and by ISO code. (#14)
 
 ### Changed
 
-- Breaking: `Maps` is `{ world, continents }`, and a host passes `await mapsFor(labels)` where it passed `maps`. `maps` is still exported, with the world alone.
+- Breaking: `Maps` is `{ world, continents }`, and a host passes `await mapsFor(labels)` where it passed `maps`. `maps` is still exported, with the world alone. (#14)
 
 ### Removed
 
-- Breaking: the grid of Brazilian states and the `tiles` chart type. A places spec naming states, of Brazil or any country, is drawn as a ranking.
+- Breaking: the grid of Brazilian states and the `tiles` chart type. A places spec naming states, of Brazil or any country, is drawn as a ranking. (#14)
 
 ## [0.1.2] - 2026-11-13
 
@@ -41,7 +43,8 @@ While the major version is `0`, a breaking change bumps the minor version.
 - `toSVG({ mark })` draws a host's brand mark at the right of the footer; the package itself ships no logo.
 - The map data ships as its own entry, `qvac-charts/maps`: pass it as `Chart.from(spec, { maps })` to draw place charts. Without it they are drawn as rankings, and the core stays under 30 KB minified.
 
-[Unreleased]: https://github.com/tetherto/qvac-charts/compare/v0.1.2...HEAD
+[Unreleased]: https://github.com/tetherto/qvac-charts/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/tetherto/qvac-charts/compare/v0.1.2...v0.2.0
 [0.1.2]: https://github.com/tetherto/qvac-charts/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/tetherto/qvac-charts/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/tetherto/qvac-charts/releases/tag/v0.1.0
