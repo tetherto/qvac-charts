@@ -1,0 +1,24 @@
+{
+  "shape": "parts",
+  "variant": "auto",
+  "title": "Retail Still Leads in the South",
+  "subtitle": "Share of sales by channel and region, 2025",
+  "data": [
+    { "label": "North", "group": "Online", "value": 60 },
+    { "label": "North", "group": "Retail", "value": 30 },
+    { "label": "North", "group": "Partners", "value": 10 },
+    { "label": "South", "group": "Online", "value": 40 },
+    { "label": "South", "group": "Retail", "value": 45 },
+    { "label": "South", "group": "Partners", "value": 15 },
+    { "label": "East", "group": "Online", "value": 55 },
+    { "label": "East", "group": "Retail", "value": 25 },
+    { "label": "East", "group": "Partners", "value": 20 },
+    { "label": "West", "group": "Online", "value": 35 },
+    { "label": "West", "group": "Retail", "value": 50 },
+    { "label": "West", "group": "Partners", "value": 15 }
+  ],
+  "unit": "percent",
+  "scale": "none",
+  "callout": "none",
+  "source": "Example data"
+}

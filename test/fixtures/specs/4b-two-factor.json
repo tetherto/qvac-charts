@@ -1,0 +1,20 @@
+{
+  "shape": "parts",
+  "title": "Two-factor authentication adoption",
+  "subtitle": "Percentage of users with two-factor authentication enabled",
+  "data": [
+    {
+      "label": "With two-factor authentication",
+      "value": 28
+    },
+    {
+      "label": "Without two-factorauthentication",
+      "value": 72
+    }
+  ],
+  "highlight": "With two-factor authentication",
+  "scale": "ones",
+  "unit": "percent",
+  "callout": "none",
+  "source": "User data"
+}

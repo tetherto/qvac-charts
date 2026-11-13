@@ -1,0 +1,28 @@
+{
+  "shape": "parts",
+  "title": "Gastos com a viagem",
+  "subtitle": "Categorias de despesas",
+  "data": [
+    {
+      "label": "Hospedagem",
+      "value": 3200
+    },
+    {
+      "label": "Passagens",
+      "value": 2800
+    },
+    {
+      "label": "Alimentação",
+      "value": 1500
+    },
+    {
+      "label": "Passeios",
+      "value": 900
+    }
+  ],
+  "highlight": "Hospedagem",
+  "scale": "ones",
+  "unit": "reais",
+  "callout": "share",
+  "source": "User data"
+}

@@ -1,0 +1,72 @@
+{
+  "shape": "change",
+  "title": "NPS by market, 2024 to 2025",
+  "subtitle": "Net Promoter Score across markets",
+  "data": [
+    {
+      "label": "Brazil",
+      "value": 32,
+      "group": "2024"
+    },
+    {
+      "label": "Brazil",
+      "value": 45,
+      "group": "2025"
+    },
+    {
+      "label": "Mexico",
+      "value": 28,
+      "group": "2024"
+    },
+    {
+      "label": "Mexico",
+      "value": 31,
+      "group": "2025"
+    },
+    {
+      "label": "US",
+      "value": 40,
+      "group": "2024"
+    },
+    {
+      "label": "US",
+      "value": 38,
+      "group": "2025"
+    },
+    {
+      "label": "Germany",
+      "value": 22,
+      "group": "2024"
+    },
+    {
+      "label": "Germany",
+      "value": 35,
+      "group": "2025"
+    },
+    {
+      "label": "Japan",
+      "value": 18,
+      "group": "2024"
+    },
+    {
+      "label": "Japan",
+      "value": 20,
+      "group": "2025"
+    }
+  ],
+  "highlight": "Germany",
+  "scale": "ones",
+  "unit": "percent",
+  "callout": "growth",
+  "source": "User data",
+  "annotations": [
+    {
+      "label": "Brazil",
+      "text": "Highest growth from 32 to 45"
+    },
+    {
+      "label": "US",
+      "text": "Slight decline from 40 to 38"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "shape": "ranking",
+  "variant": "radial",
+  "title": "The Most Spoken Languages",
+  "subtitle": "Total speakers, native and second-language, in millions",
+  "data": [
+    { "label": "English", "value": 1456 },
+    { "label": "Mandarin", "value": 1138 },
+    { "label": "Hindi", "value": 610 },
+    { "label": "Spanish", "value": 559 },
+    { "label": "French", "value": 310 },
+    { "label": "Arabic", "value": 274 },
+    { "label": "Bengali", "value": 273 },
+    { "label": "Portuguese", "value": 264 }
+  ],
+  "highlight": "English",
+  "unit": "count",
+  "scale": "M",
+  "callout": "none",
+  "source": "Ethnologue, 2023 edition (figures as commonly cited)"
+}

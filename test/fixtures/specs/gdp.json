@@ -1,0 +1,23 @@
+{
+  "type": "ranked-bar",
+  "title": "The World's 10 Largest Economies",
+  "subtitle": "Nominal GDP in 2025, in trillions of U.S. dollars",
+  "data": [
+    { "label": "United States", "value": 30.77 },
+    { "label": "China", "value": 19.63 },
+    { "label": "Germany", "value": 5.05 },
+    { "label": "Japan", "value": 4.44 },
+    { "label": "United Kingdom", "value": 4.0 },
+    { "label": "India", "value": 3.92 },
+    { "label": "France", "value": 3.37 },
+    { "label": "Russia", "value": 2.59 },
+    { "label": "Italy", "value": 2.55 },
+    { "label": "Canada", "value": 2.32 }
+  ],
+  "highlight": "United States",
+  "prefix": "$",
+  "suffix": "T",
+  "decimals": 2,
+  "callout": { "value": "26%", "text": "of world GDP comes from the U.S. economy alone" },
+  "source": "IMF World Economic Outlook, April 2026 (via StatisticsTimes)"
+}

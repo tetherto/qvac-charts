@@ -1,0 +1,28 @@
+{
+  "shape": "over-time",
+  "title": "Revenue Growth",
+  "subtitle": "Annual revenue from 2021 to 2024",
+  "data": [
+    {
+      "label": "2021",
+      "value": 1.2
+    },
+    {
+      "label": "2022",
+      "value": 2
+    },
+    {
+      "label": "2023",
+      "value": 3.1
+    },
+    {
+      "label": "2024",
+      "value": 4.8
+    }
+  ],
+  "highlight": "2024",
+  "scale": "millions",
+  "unit": "dollars",
+  "callout": "growth",
+  "source": "User data"
+}

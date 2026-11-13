@@ -1,0 +1,54 @@
+{
+  "name": "@qvac/charts",
+  "version": "0.0.0",
+  "description": "Renders a small JSON chart spec into an SVG, on Bare and Node",
+  "type": "module",
+  "exports": {
+    "./package": "./package.json",
+    ".": "./index.ts"
+  },
+  "files": [
+    "package.json",
+    "dist-lib"
+  ],
+  "engines": {
+    "bare": ">=1.33.4",
+    "node": "^22.21.0 || >=24.9.0"
+  },
+  "scripts": {
+    "format": "prettier . --write",
+    "lint": "prettier . --check && lunte && tsc --noEmit",
+    "test": "npm run test:node && npm run test:bare",
+    "test:node": "brittle-node test/all.mjs",
+    "test:bare": "brittle-bare test/all.mjs",
+    "test:generate": "brittle-make-test test/all.mjs test/*.ts",
+    "build:lib": "node scripts/build-lib.mjs",
+    "build:world": "node scripts/project-world.mjs lib/maps/world.ts",
+    "test:snapshots": "node scripts/snapshots.mjs"
+  },
+  "devDependencies": {
+    "brittle": "^4.5.0",
+    "d3-geo": "3.1.1",
+    "holepunch-types": "^0.2.3",
+    "lunte": "^1.8.6",
+    "lunte-plugin-qvac": "^0.2.0",
+    "prettier": "^3.9.6",
+    "prettier-config-holepunch": "^2.0.0",
+    "topojson-client": "3.1.0",
+    "typescript": "^7.0.2",
+    "world-atlas": "2.0.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tetherto/qvac-charts.git"
+  },
+  "author": "Tether Inc",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/tetherto/qvac-charts/issues"
+  },
+  "homepage": "https://github.com/tetherto/qvac-charts"
+}

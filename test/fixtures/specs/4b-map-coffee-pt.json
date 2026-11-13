@@ -1,0 +1,32 @@
+{
+  "shape": "places",
+  "title": "Principais produtores de café no mundo",
+  "subtitle": "Volume em milhões de sacas",
+  "data": [
+    {
+      "label": "Brasil",
+      "value": 66
+    },
+    {
+      "label": "Vietnã",
+      "value": 29
+    },
+    {
+      "label": "Colômbia",
+      "value": 12
+    },
+    {
+      "label": "Indonésia",
+      "value": 11
+    },
+    {
+      "label": "Etiópia",
+      "value": 8.4
+    }
+  ],
+  "highlight": "Brasil",
+  "scale": "millions",
+  "unit": "number",
+  "callout": "ratio",
+  "source": "User data"
+}

@@ -1,0 +1,26 @@
+name: Publish
+on:
+  push:
+    tags:
+      - v*
+permissions:
+  id-token: write
+  contents: write
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment:
+      name: npm
+    name: Publish
+    steps:
+      - uses: holepunchto/actions/node-base@v1
+      - run: npm run build:lib
+      # exports point at dist-lib only in the artifact; the repo's lanes resolve source
+      - run: node scripts/prepare-publish.mjs
+      - uses: holepunchto/actions/publish@v1
+      # the publish action creates the release with an empty body
+      - run: |
+          node scripts/release-notes.mjs "$GITHUB_REF_NAME" > "$RUNNER_TEMP/notes.md"
+          gh release edit "$GITHUB_REF_NAME" --notes-file "$RUNNER_TEMP/notes.md"
+        env:
+          GH_TOKEN: ${{ github.token }}

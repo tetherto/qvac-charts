@@ -1,0 +1,44 @@
+{
+  "shape": "over-time",
+  "title": "World population growth by decade",
+  "subtitle": "Number of people since 1950",
+  "data": [
+    {
+      "label": "1950",
+      "value": 2520
+    },
+    {
+      "label": "1960",
+      "value": 3038
+    },
+    {
+      "label": "1970",
+      "value": 3704
+    },
+    {
+      "label": "1980",
+      "value": 4458
+    },
+    {
+      "label": "1990",
+      "value": 5325
+    },
+    {
+      "label": "2000",
+      "value": 6146
+    },
+    {
+      "label": "2010",
+      "value": 6974
+    },
+    {
+      "label": "2020",
+      "value": 7804
+    }
+  ],
+  "highlight": "2020",
+  "scale": "millions",
+  "unit": "number",
+  "callout": "growth",
+  "source": "Approximate, from model knowledge"
+}

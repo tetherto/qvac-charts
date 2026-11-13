@@ -1,0 +1,44 @@
+{
+  "shape": "sizes",
+  "title": "Planets by diameter",
+  "subtitle": "Diameter in kilometers",
+  "data": [
+    {
+      "label": "Jupiter",
+      "value": 139820
+    },
+    {
+      "label": "Saturn",
+      "value": 116460
+    },
+    {
+      "label": "Uranus",
+      "value": 50724
+    },
+    {
+      "label": "Neptune",
+      "value": 49244
+    },
+    {
+      "label": "Earth",
+      "value": 12742
+    },
+    {
+      "label": "Venus",
+      "value": 12104
+    },
+    {
+      "label": "Mars",
+      "value": 6779
+    },
+    {
+      "label": "Mercury",
+      "value": 4879
+    }
+  ],
+  "highlight": "Jupiter",
+  "scale": "thousands",
+  "unit": "number",
+  "callout": "ratio",
+  "source": "Approximate, from model knowledge"
+}

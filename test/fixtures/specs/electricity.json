@@ -1,0 +1,17 @@
+{
+  "type": "treemap",
+  "title": "Where the World's Electricity Came From in 2024",
+  "subtitle": "Share of global power generation by source. Fossil fuels fell below 60% for the first time since the 1940s.",
+  "data": [
+    { "label": "Coal", "value": 34.4, "group": "Fossil" },
+    { "label": "Gas", "value": 22.0, "group": "Fossil" },
+    { "label": "Hydro", "value": 14.3, "group": "Clean" },
+    { "label": "Nuclear", "value": 9.0, "group": "Clean" },
+    { "label": "Wind", "value": 8.1, "group": "Clean" },
+    { "label": "Solar", "value": 6.9, "group": "Clean" },
+    { "label": "Bioenergy, oil & other", "value": 5.3, "group": "Other" }
+  ],
+  "suffix": "%",
+  "decimals": 1,
+  "source": "Ember, Global Electricity Review 2025. 'Other' is the remainder of the reported shares."
+}

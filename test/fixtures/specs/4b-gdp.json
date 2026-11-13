@@ -1,0 +1,36 @@
+{
+  "shape": "ranking",
+  "title": "Top 6 Economies by 2025 GDP",
+  "subtitle": "Gross domestic product in trillions of US dollars",
+  "data": [
+    {
+      "label": "United States",
+      "value": 30.77
+    },
+    {
+      "label": "China",
+      "value": 19.63
+    },
+    {
+      "label": "Germany",
+      "value": 5.05
+    },
+    {
+      "label": "Japan",
+      "value": 4.44
+    },
+    {
+      "label": "United Kingdom",
+      "value": 4
+    },
+    {
+      "label": "India",
+      "value": 3.92
+    }
+  ],
+  "highlight": "United States",
+  "scale": "trillions",
+  "unit": "dollars",
+  "callout": "ratio",
+  "source": "IMF"
+}

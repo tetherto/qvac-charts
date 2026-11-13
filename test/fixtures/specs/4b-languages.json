@@ -1,0 +1,36 @@
+{
+  "shape": "ranking",
+  "title": "Most spoken languages by number of speakers",
+  "subtitle": "Number of speakers in millions",
+  "data": [
+    {
+      "label": "English",
+      "value": 1460
+    },
+    {
+      "label": "Mandarin",
+      "value": 1140
+    },
+    {
+      "label": "Hindi",
+      "value": 610
+    },
+    {
+      "label": "Spanish",
+      "value": 559
+    },
+    {
+      "label": "French",
+      "value": 310
+    },
+    {
+      "label": "Arabic",
+      "value": 274
+    }
+  ],
+  "highlight": "English",
+  "scale": "millions",
+  "unit": "number",
+  "callout": "ratio",
+  "source": "Ethnologue"
+}

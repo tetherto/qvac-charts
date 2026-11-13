@@ -1,0 +1,24 @@
+{
+  "shape": "places",
+  "map": "world",
+  "variant": "bubbles",
+  "title": "Nuclear Power Is Concentrated in a Few Countries",
+  "subtitle": "Installed nuclear capacity, gigawatts",
+  "data": [
+    { "label": "United States", "value": 97 },
+    { "label": "France", "value": 63 },
+    { "label": "China", "value": 57 },
+    { "label": "Russia", "value": 27 },
+    { "label": "South Korea", "value": 26 },
+    { "label": "Canada", "value": 13 },
+    { "label": "Ukraine", "value": 13 },
+    { "label": "Japan", "value": 12 },
+    { "label": "India", "value": 7 },
+    { "label": "Brazil", "value": 2 }
+  ],
+  "highlight": "France",
+  "scale": "ones",
+  "unit": "number",
+  "callout": "none",
+  "source": "Fictional sample data"
+}

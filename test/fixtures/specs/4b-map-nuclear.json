@@ -1,0 +1,36 @@
+{
+  "shape": "places",
+  "title": "World nuclear capacity by country",
+  "subtitle": "Installed capacity in gigawatts",
+  "data": [
+    {
+      "label": "US",
+      "value": 97
+    },
+    {
+      "label": "France",
+      "value": 63
+    },
+    {
+      "label": "China",
+      "value": 57
+    },
+    {
+      "label": "Russia",
+      "value": 27
+    },
+    {
+      "label": "South Korea",
+      "value": 26
+    },
+    {
+      "label": "Canada",
+      "value": 13
+    }
+  ],
+  "highlight": "US",
+  "scale": "ones",
+  "unit": "pounds",
+  "callout": "none",
+  "source": "User data"
+}

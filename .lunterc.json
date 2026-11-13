@@ -1,0 +1,7 @@
+{
+  "plugins": ["lunte-plugin-qvac"],
+  "rules": {
+    "curly": "off",
+    "qvac/max-function-lines": "warn"
+  }
+}

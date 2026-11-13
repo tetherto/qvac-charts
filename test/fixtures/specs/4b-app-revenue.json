@@ -1,0 +1,50 @@
+{
+  "shape": "parts",
+  "title": "App revenue by category",
+  "subtitle": "Revenue in thousands of dollars this year",
+  "data": [
+    {
+      "label": "Games",
+      "value": 820
+    },
+    {
+      "label": "Subscriptions",
+      "value": 540
+    },
+    {
+      "label": "Ads",
+      "value": 310
+    },
+    {
+      "label": "In-app purchases",
+      "value": 260
+    },
+    {
+      "label": "Merchandise",
+      "value": 95
+    },
+    {
+      "label": "Licensing",
+      "value": 70
+    },
+    {
+      "label": "Sponsorships",
+      "value": 45
+    }
+  ],
+  "highlight": "Games",
+  "scale": "thousands",
+  "unit": "dollars",
+  "callout": "share",
+  "source": "User data",
+  "annotations": [
+    {
+      "label": "Games",
+      "text": "Contributes 24.2% more than the next category."
+    },
+    {
+      "label": "Sponsorships",
+      "text": "Contributes less than half the revenue of Games."
+    }
+  ]
+}

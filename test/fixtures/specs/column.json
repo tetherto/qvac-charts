@@ -1,0 +1,18 @@
+{
+  "shape": "over-time",
+  "variant": "auto",
+  "title": "Our App Tripled Its Users in Six Months",
+  "subtitle": "Monthly active users, January to June 2025",
+  "data": [
+    { "label": "Jan", "value": 12000 },
+    { "label": "Feb", "value": 15000 },
+    { "label": "Mar", "value": 19000 },
+    { "label": "Apr", "value": 22000 },
+    { "label": "May", "value": 30000 },
+    { "label": "Jun", "value": 41000 }
+  ],
+  "unit": "count",
+  "scale": "none",
+  "callout": "growth",
+  "source": "Example data"
+}

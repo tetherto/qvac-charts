@@ -1,0 +1,24 @@
+{
+  "shape": "parts",
+  "title": "Enterprise segment drove the quarter",
+  "subtitle": "Deals by segment",
+  "data": [
+    {
+      "label": "Enterprise",
+      "value": 14
+    },
+    {
+      "label": "SMB",
+      "value": 37
+    },
+    {
+      "label": "Public sector",
+      "value": 9
+    }
+  ],
+  "highlight": "SMB",
+  "scale": "ones",
+  "unit": "number",
+  "callout": "none",
+  "source": "User data"
+}

@@ -1,0 +1,32 @@
+{
+  "shape": "ranking",
+  "title": "USDT dominates stablecoin supply in mid-2026",
+  "subtitle": "Supply in billions of dollars",
+  "data": [
+    {
+      "label": "USDT",
+      "value": 187
+    },
+    {
+      "label": "USDC",
+      "value": 75
+    },
+    {
+      "label": "USDe",
+      "value": 14.8
+    },
+    {
+      "label": "USDS",
+      "value": 8
+    },
+    {
+      "label": "DAI",
+      "value": 4.6
+    }
+  ],
+  "highlight": "USDT",
+  "scale": "billions",
+  "unit": "dollars",
+  "callout": "ratio",
+  "source": "User data"
+}
