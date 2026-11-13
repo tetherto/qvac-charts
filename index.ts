@@ -3,9 +3,14 @@ import { normalize } from './lib/normalize.ts'
 import { render } from './lib/render.ts'
 import { chartSchema } from './lib/schema.ts'
 import type { Chart as Normalized, ChartType, Spec } from './lib/spec.ts'
+import type { Maps } from './lib/places.ts'
 import type { ThemeName } from './lib/themes.ts'
 
 export type { ChartType, Spec, ThemeName }
+
+export interface ChartOptions {
+  maps?: Maps
+}
 
 export interface SVGOptions {
   theme?: ThemeName
@@ -14,8 +19,9 @@ export interface SVGOptions {
 export class Chart {
   static schema = chartSchema
 
-  static from(spec: Spec): Chart {
-    return new Chart(normalize(spec))
+  // Place charts need the map data from @qvac/charts/maps; without it they are drawn as rankings.
+  static from(spec: Spec, { maps }: ChartOptions = {}): Chart {
+    return new Chart(normalize(spec, maps))
   }
 
   readonly type: ChartType
