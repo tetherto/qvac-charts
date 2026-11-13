@@ -8,6 +8,15 @@ export interface TextStyle {
   spacing?: number
 }
 
+// A value placed inside a double-quoted attribute, such as a host's image href.
+export function attr(value: string): string {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+}
+
 export function text(str: string | number, style: TextStyle): string {
   const { x, y, size, fill, weight = 400, anchor = 'start', spacing = 0 } = style
   const esc = String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')

@@ -47,3 +47,37 @@ test('numbers written in a label are not rounded', (t) => {
 
   t.ok(Chart.from(spec).toSVG().includes('tolerance="0.0125"'))
 })
+
+test('a host mark is drawn at the right of the footer, and only when passed', (t) => {
+  const spec: Spec = {
+    ...base,
+    shape: 'ranking',
+    data: [
+      { label: 'a', value: 2 },
+      { label: 'b', value: 1 }
+    ],
+    callout: 'none'
+  }
+  const mark = { href: 'data:image/png;base64,AAAA', width: 110, height: 48 }
+  const chart = Chart.from(spec)
+
+  t.ok(chart.toSVG({ mark }).includes('<image href="data:image/png;base64,AAAA" x="898" y="1260"'))
+  t.absent(chart.toSVG().includes('<image'))
+})
+
+test('a mark href cannot break out of its attribute', (t) => {
+  const spec: Spec = {
+    ...base,
+    shape: 'ranking',
+    data: [
+      { label: 'a', value: 2 },
+      { label: 'b', value: 1 }
+    ],
+    callout: 'none'
+  }
+  const svg = Chart.from(spec).toSVG({
+    mark: { href: 'x" onload="alert(1)', width: 10, height: 10 }
+  })
+
+  t.ok(svg.includes('href="x&quot; onload=&quot;alert(1)"'))
+})
