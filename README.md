@@ -49,12 +49,12 @@ Without `maps`, a spec with `shape: 'places'` is drawn as a ranking of its place
 ## Development
 
 ```sh
-npm install
-npm run lint
-npm test
+bun install
+bun run lint
+bun run test
 ```
 
-`npm test` runs the suite on Node and on Bare. The snapshot tests hash the SVG of every spec in `test/fixtures/specs/`; after an intended change to the drawing, look at the charts and run `npm run snapshots:update` to record the new hashes. `npm run build:lib` compiles the TypeScript source to `dist-lib/`, which is what the package publishes.
+Dependencies install with bun from `bun.lock`; `bunfig.toml` skips install scripts and any release younger than seven days. `bun run test` runs the suite on Node and on Bare (pinned by `bare-runtime`). The snapshot tests hash the SVG of every spec in `test/fixtures/specs/`; after an intended change to the drawing, look at the charts and run `bun run snapshots:update` to record the new hashes. `bun run build:lib` compiles the TypeScript source to `dist-lib/`, which is what the package publishes.
 
 ## License
 
