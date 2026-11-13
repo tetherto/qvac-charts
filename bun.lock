@@ -3,7 +3,7 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "@qvac/charts",
+      "name": "qvac-charts",
       "devDependencies": {
         "bare-runtime": "1.36.0",
         "brittle": "^4.5.0",

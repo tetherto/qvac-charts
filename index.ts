@@ -22,7 +22,7 @@ export interface SVGOptions {
 export class Chart {
   static schema = chartSchema
 
-  // Place charts need the map data from @qvac/charts/maps; without it they are drawn as rankings.
+  // Place charts need the map data from qvac-charts/maps; without it they are drawn as rankings.
   static from(spec: Spec, { maps }: ChartOptions = {}): Chart {
     return new Chart(normalize(spec, maps))
   }
