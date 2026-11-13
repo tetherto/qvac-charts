@@ -1,12 +1,12 @@
 import { callout, type Draw } from '../frame.ts'
-import { stroke } from '../geometry.ts'
+import { ceiling, stroke } from '../geometry.ts'
 import { text } from '../svg.ts'
 
 export function rankedBar(d: Draw): void {
   const { out, spec, t, b, fmt } = d
   const rows = [...spec.data].sort((a, c) => c.value - a.value)
   const hl = spec.highlight ?? rows[0].label
-  const max = rows[0].value
+  const max = ceiling(rows.map((r) => r.value))
   const rowH = Math.min(86, b.h / rows.length)
   const labelW = Math.min(300, Math.max(...rows.map((r) => r.label.length)) * 30 * 0.56)
   const x0 = b.x + 64 + labelW + 20
@@ -50,7 +50,7 @@ export function rankedBar(d: Draw): void {
 
 export function radial({ out, spec, t, b, fmt }: Draw): void {
   const rows = [...spec.data].sort((a, c) => c.value - a.value)
-  const max = rows[0].value
+  const max = ceiling(rows.map((r) => r.value))
   const R = Math.min(b.w / 2, b.h / 2) - 10
   const c = { x: b.x + b.w / 2, y: b.y + b.h / 2 }
   const band = (R * 0.78) / rows.length

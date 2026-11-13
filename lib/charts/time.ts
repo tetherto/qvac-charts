@@ -1,5 +1,5 @@
 import { callout, type Draw } from '../frame.ts'
-import { dodge, ticks } from '../geometry.ts'
+import { ceiling, dodge, ticks } from '../geometry.ts'
 import type { Row } from '../spec.ts'
 import { text, wrap } from '../svg.ts'
 
@@ -30,7 +30,7 @@ function grid({ out, t, fmt }: Draw, { py, left, width, max }: Grid): void {
 export function line(d: Draw): void {
   const { out, spec, t, b } = d
   const pts = spec.data
-  const max = Math.max(...pts.map((p) => p.value)) * 1.12
+  const max = ceiling(pts.map((p) => p.value)) * 1.12
   const pad = { l: 90, r: 40, t: 160, b: 60 }
   const px = (i: number): number => b.x + pad.l + (i * (b.w - pad.l - pad.r)) / (pts.length - 1)
   const py = (v: number): number => b.y + b.h - pad.b - (v / max) * (b.h - pad.t - pad.b)
@@ -105,7 +105,7 @@ export function column(d: Draw): void {
   const { out, spec, t, b, fmt } = d
   const pts = spec.data
   const hl = spec.highlight ?? pts[pts.length - 1].label
-  const max = Math.max(...pts.map((p) => p.value)) * 1.12
+  const max = ceiling(pts.map((p) => p.value)) * 1.12
   const top = b.y + (spec.callout ? 190 : 20)
   const base = b.y + b.h - 60
   const slot = b.w / pts.length
@@ -149,7 +149,7 @@ export function multiLine(d: Draw): void {
   const { out, spec, t, b, fmt } = d
   const labels = [...new Set(spec.data.map((p) => p.label))]
   const groups = [...new Set(spec.data.map((p) => p.group ?? ''))]
-  const max = Math.max(...spec.data.map((p) => p.value)) * 1.12
+  const max = ceiling(spec.data.map((p) => p.value)) * 1.12
   const pad = { l: 90, r: 230, t: 40, b: 60 }
   const px = (i: number): number =>
     b.x + pad.l + (i * (b.w - pad.l - pad.r)) / Math.max(1, labels.length - 1)
