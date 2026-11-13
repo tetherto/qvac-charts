@@ -1,11 +1,11 @@
-# @qvac/charts
+# qvac-charts
 
 Renders a small JSON chart spec, written by a local model, into an SVG in an editorial style. No runtime dependencies; runs on Bare and Node.
 
 ## Usage
 
 ```js
-import { Chart } from '@qvac/charts'
+import { Chart } from 'qvac-charts'
 
 // Chart.schema is the JSON Schema a model fills, through responseFormat or a tool's parameters
 const chart = Chart.from({
@@ -46,8 +46,8 @@ chart.toSVG({ theme: 'dark', mark: { href: 'data:image/png;base64,…', width: 1
 The map data is its own entry, so a host that draws no maps does not load it (about 120 KB):
 
 ```js
-import { Chart } from '@qvac/charts'
-import { maps } from '@qvac/charts/maps'
+import { Chart } from 'qvac-charts'
+import { maps } from 'qvac-charts/maps'
 
 const chart = Chart.from(spec, { maps }) // shape 'places' becomes a choropleth, a bubble map or the Brazil grid
 ```

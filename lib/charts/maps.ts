@@ -9,7 +9,7 @@ const byValue = (data: ReadonlyArray<Row>): Row[] => [...data].sort((a, c) => c.
 // Map charts are only picked when the host passed map data, so a missing one is a bug upstream.
 function atlas(spec: Chart): Maps {
   if (!spec.maps) {
-    throw new Error(`${spec.type} needs the map data from @qvac/charts/maps`)
+    throw new Error(`${spec.type} needs the map data from qvac-charts/maps`)
   }
 
   return spec.maps

@@ -1,5 +1,5 @@
 {
-  "name": "@qvac/charts",
+  "name": "qvac-charts",
   "version": "0.1.0",
   "description": "Renders a small JSON chart spec into an SVG, on Bare and Node",
   "type": "module",
