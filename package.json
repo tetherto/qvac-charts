@@ -1,6 +1,6 @@
 {
   "name": "qvac-charts",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Renders a small JSON chart spec into an SVG, on Bare and Node",
   "type": "module",
   "exports": {
