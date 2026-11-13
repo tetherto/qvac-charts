@@ -10,7 +10,8 @@
   },
   "files": [
     "package.json",
-    "dist-lib"
+    "dist-lib",
+    "NOTICE.md"
   ],
   "engines": {
     "bare": ">=1.33.4",
